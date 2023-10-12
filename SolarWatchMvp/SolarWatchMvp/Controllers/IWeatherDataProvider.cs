@@ -2,6 +2,6 @@
 
 public interface IWeatherDataProvider
 {
-    public string GetCoordinates(string cityName);
-    public string GetSunTime(double lat, double lon);
+    Task<string> GetCoordinates(string cityName);
+    Task<string> GetSunTime(double lat, double lon);
 }

@@ -19,14 +19,14 @@ public class WeatherForecastController : ControllerBase
     }
     
     [HttpGet("Get")]
-    public ActionResult<SolarWatch> GetSunTime(string name)
+    public async Task<ActionResult<SolarWatch>> GetSunTime(string name)
     {
         try
         {
-            var weatherData = _weatherDataProvider.GetCoordinates(name);
+            var weatherData = await _weatherDataProvider.GetCoordinates(name);
             var coordinates = _jsonProcessor.CoordinateProcess(weatherData);
             
-            var sunsetSunrise = _weatherDataProvider.GetSunTime(coordinates.Latitude, coordinates.Longitude);
+            var sunsetSunrise = await _weatherDataProvider.GetSunTime(coordinates.Latitude, coordinates.Longitude);
             var time = _jsonProcessor.SunTimeProcess(sunsetSunrise);
             
             return Ok(time);
