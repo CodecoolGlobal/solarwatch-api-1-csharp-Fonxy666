@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SolarWatchMvp.Controllers;
+using SolarWatchMvp.Model;
 
 namespace SunriseSunsetTest;
 
@@ -29,6 +30,6 @@ public class Tests
         
         var result = _controller.GetSunTime("Budapest");
         
-        Assert.IsInstanceOf(typeof(NotFoundObjectResult), result.Result);
+        Assert.That(result.Result, Is.InstanceOf(typeof(ActionResult<SolarWatch>)));
     }
 }
