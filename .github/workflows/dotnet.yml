@@ -13,9 +13,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: D:/codecool/solarwatch/SolarWatchMvp
     steps:
     - uses: actions/checkout@v2
     - name: Setup Node.js
@@ -27,8 +24,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore SolarWatchMvp.csproj
+      run: dotnet restore **/*.csproj
     - name: Build
-      run: dotnet build --no-restore SolarWatchMvp.csproj
+      run: dotnet build --no-restore **/*.csproj
     - name: Test
-      run: dotnet test --no-build --verbosity normal SolarWatchMvp.csproj
+      run: dotnet test --no-build --verbosity normal **/*.csproj
