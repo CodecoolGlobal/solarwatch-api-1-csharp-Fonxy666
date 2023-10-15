@@ -33,4 +33,4 @@ jobs:
           context: .
           push: true
           tags: fonxy6/solarwatch_image:latest
-          dockerfile: D:/codecool/solarwatch/SolarWatchMvp/SolarWatchMvp/Dockerfile
+          dockerfile: SolarWatchMvp/SolarWatchMvp/Dockerfile
