@@ -20,8 +20,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore D:\codecool\solarwatch\SolarWatchMvp\SolarWatchMvp
+      run: dotnet restore D:/codecool/solarwatch/SolarWatchMvp/SolarWatchMvp
     - name: Build
-      run: dotnet build --no-restore D:\codecool\solarwatch\SolarWatchMvp\SolarWatchMvp\SolarWatchMvp.csproj
+      run: dotnet build --no-restore D:/codecool/solarwatch/SolarWatchMvp/SolarWatchMvp/SolarWatchMvp.csproj
     - name: Test
-      run: dotnet test --no-build --verbosity normal D:\codecool\solarwatch\SolarWatchMvp\SolarWatchMvp\SolarWatchMvp.csproj
+      run: dotnet test --no-build --verbosity normal D:/codecool/solarwatch/SolarWatchMvp/SolarWatchMvp/SolarWatchMvp.csproj
