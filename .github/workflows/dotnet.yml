@@ -27,7 +27,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore D:/codecool/solarwatch/SolarWatchMvp/SolarWatchMvp/SolarWatchMvp.csproj
+      run: dotnet restore ../../src/SolarWatchMvp/SolarWatchMvp.csproj
     - name: Build
       run: dotnet build --no-restore D:/codecool/solarwatch/SolarWatchMvp/SolarWatchMvp/SolarWatchMvp.csproj
     - name: Test
