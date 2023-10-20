@@ -25,7 +25,10 @@ jobs:
         uses: docker/login-action@v1
         with:
           username: fonxy6
-          password: dckr_pat_HgxTTHJm4Afokj4NKNcof4OJFlM
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: List files in context
+        run: ls -R
 
       - name: Build and push
         uses: docker/build-push-action@v2
