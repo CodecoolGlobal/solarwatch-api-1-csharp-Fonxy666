@@ -10,8 +10,11 @@ namespace SolarWatchMvp.Data
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(
+            /*optionsBuilder.UseSqlServer(
                 "Server=localhost,1433;Database=solarwatch;User Id=sa;Password=yourStrong(!)Password;"
+            );*/
+            optionsBuilder.UseSqlServer(
+                "Server=localhost,1433;Database=solarwatch;User Id=sa;Password=yourStrong(!)Password;Encrypt=False;"
             );
         }
 
@@ -28,7 +31,6 @@ namespace SolarWatchMvp.Data
             modelBuilder.Entity<SunTime>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
-                // Other configurations for SunTime if necessary
             });
         }
     }
