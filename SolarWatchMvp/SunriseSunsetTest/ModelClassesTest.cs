@@ -33,15 +33,15 @@ namespace SunriseSunsetTest
             const string expectedSunRiseDate = "2000-01-01";
             const string expectedSunSetDate = "2000-01-01";
 
-            var solarWatch = new SolarWatch
+            var solarWatch = new SunTime
             {
-                SunRiseDate = expectedSunRiseDate,
-                SunSetDate = expectedSunSetDate
+                SunRiseTime = expectedSunRiseDate,
+                SunSetTime = expectedSunSetDate
             };
             Assert.Multiple(() =>
             {
-                Assert.That(solarWatch.SunRiseDate, Is.EqualTo(expectedSunRiseDate), "Sun rise date should be set to the provided value.");
-                Assert.That(solarWatch.SunSetDate, Is.EqualTo(expectedSunSetDate), "Sun set date should be set to the provided value.");
+                Assert.That(solarWatch.SunRiseTime, Is.EqualTo(expectedSunRiseDate), "Sun rise date should be set to the provided value.");
+                Assert.That(solarWatch.SunSetTime, Is.EqualTo(expectedSunSetDate), "Sun set date should be set to the provided value.");
             });
         }
     }

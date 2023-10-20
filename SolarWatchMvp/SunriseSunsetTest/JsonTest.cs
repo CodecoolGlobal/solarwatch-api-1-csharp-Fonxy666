@@ -36,8 +36,8 @@ namespace SunriseSunsetTest
             var result = jsonProcessor.SunTimeProcess(data);
 
             // Assert
-            Assert.AreEqual("2023-10-14T06:45:00+00:00", result.SunRiseDate);
-            Assert.AreEqual("2023-10-14T18:20:00+00:00", result.SunSetDate);
+            Assert.AreEqual("2023-10-14T06:45:00+00:00", result.SunRiseTime);
+            Assert.AreEqual("2023-10-14T18:20:00+00:00", result.SunSetTime);
         }
     }
 }

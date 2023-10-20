@@ -19,7 +19,7 @@ public class WeatherForecastController : ControllerBase
     }
     
     [HttpGet("Get")]
-    public async Task<ActionResult<SolarWatch>> GetSunTime(string name)
+    public async Task<ActionResult<SunTime>> GetSunTime(string name)
     {
         try
         {

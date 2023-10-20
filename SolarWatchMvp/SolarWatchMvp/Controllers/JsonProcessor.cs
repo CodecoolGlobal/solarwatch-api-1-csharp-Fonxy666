@@ -16,15 +16,15 @@ public class JsonProcessor : IJsonProcessor
         };
     }
 
-    public SolarWatch SunTimeProcess(string data)
+    public SunTime SunTimeProcess(string data)
     {
         var json = JsonDocument.Parse(data);
         var results = json.RootElement.GetProperty("results");
 
-        return new SolarWatch
+        return new SunTime
         {
-            SunRiseDate = results.GetProperty("sunrise").ToString(),
-            SunSetDate = results.GetProperty("sunset").ToString()
+            SunRiseTime = results.GetProperty("sunrise").ToString(),
+            SunSetTime = results.GetProperty("sunset").ToString()
         };
     }
 }

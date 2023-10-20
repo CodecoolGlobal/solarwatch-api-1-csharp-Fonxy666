@@ -1,7 +1,7 @@
 namespace SolarWatchMvp.Model;
 
-public class SolarWatch
+public class SunTime
 {
-    public string SunRiseDate { get; set; }
-    public string SunSetDate { get; set; }
+    public string SunRiseTime { get; set; }
+    public string SunSetTime { get; set; }
 }

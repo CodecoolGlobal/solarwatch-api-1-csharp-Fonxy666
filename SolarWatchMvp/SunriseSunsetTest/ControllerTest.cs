@@ -30,6 +30,6 @@ public class Tests
         
         var result = _controller.GetSunTime("Budapest");
         
-        Assert.That(result.Result, Is.InstanceOf(typeof(ActionResult<SolarWatch>)));
+        Assert.That(result.Result, Is.InstanceOf(typeof(ActionResult<SunTime>)));
     }
 }
