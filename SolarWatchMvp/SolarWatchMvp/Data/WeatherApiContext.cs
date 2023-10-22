@@ -3,11 +3,11 @@ using SolarWatchMvp.Model;
 
 namespace SolarWatchMvp.Data
 {
-    public class MyDbContext : DbContext
+    public class WeatherApiContext : DbContext
     {
         public DbSet<City> Cities { get; set; }
         public DbSet<SunTime> SunTimes { get; set; }
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             /*optionsBuilder.UseSqlServer(
@@ -20,18 +20,37 @@ namespace SolarWatchMvp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // City configuration
-            modelBuilder.Entity<City>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.OwnsOne(e => e.Coordinate);
-            });
+            var cityCoordinate = new CityCoordinate { Id = 1, Longitude = 19.0402, Latitude = 47.4979 };
+            
+            //Configure the Coordinate entity-making the 'Id' unique
+            modelBuilder.Entity<CityCoordinate>().HasIndex(u => u.Id).IsUnique();
+            //Configure the City entity-making the 'Name' unique
+            modelBuilder.Entity<City>().HasIndex(u => u.Name).IsUnique();
+            
+            modelBuilder.Entity<CityCoordinate>().HasData(cityCoordinate);
 
-            // SunTime configuration
-            modelBuilder.Entity<SunTime>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            });
+            modelBuilder.Entity<City>().HasData(
+                new City
+                {
+                    Id = 1,
+                    Name = "Budapest",
+                    CoordinateId = cityCoordinate.Id,
+                    State = "Budapest",
+                    Country = "Hungary"
+                }
+            );
+            
+            //Configure the SunTime entity-making the 'id' unique
+            modelBuilder.Entity<SunTime>().HasIndex(u => u.Id).IsUnique();
+            
+            modelBuilder.Entity<SunTime>().HasData(
+                new SunTime
+                {
+                    Id = 1,
+                    SunRiseTime = "05:36",
+                    SunSetTime = "18:32"
+                }
+            );
         }
     }
 }
