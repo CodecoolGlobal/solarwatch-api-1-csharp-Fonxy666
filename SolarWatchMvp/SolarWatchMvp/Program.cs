@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using SolarWatchMvp.Controllers;
 using SolarWatchMvp.Data;
 using SolarWatchMvp.Repository;
@@ -12,8 +13,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IWeatherDataProvider, OpenWeatherMapApi>();
 builder.Services.AddSingleton<IJsonProcessor, JsonProcessor>();
-builder.Services.AddSingleton<ICityRepository, CityRepository>();
-builder.Services.AddSingleton<ISunTimeRepository, SunTimeRepository>();
+builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddScoped<ISunTimeRepository, SunTimeRepository>();
+builder.Services.AddDbContext<WeatherApiContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
@@ -32,17 +35,19 @@ app.MapControllers();
 
 void InitializeDb()
 {
-    using var db = new WeatherApiContext();
-    PrintData();
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<WeatherApiContext>();
+    PrintData(context);
     return;
 
-    void PrintData()
+    void PrintData(WeatherApiContext functionContext)
     {
-        foreach (var city in db.Cities)
+        foreach (var city in functionContext.Cities)
         {
-            Console.WriteLine($"Id: {city.Id}, Name: {city.Name},  Coordinate id: {city.CoordinateId}, State: {city.State}, Country: {city.Country}");
+            Console.WriteLine($"Id: {city.Id}, Name: {city.Name},  Latitude: {city.Latitude}, Longitude: {city.Longitude}, State: {city.State}, Country: {city.Country}");
         }
-        foreach (var dbSunTime in db.SunTimes)
+        foreach (var dbSunTime in functionContext.SunTimes)
         {
             Console.WriteLine($"Id: {dbSunTime.Id}, Sunrise time: {dbSunTime.SunRiseTime}, Sunset time: {dbSunTime.SunSetTime}");
         }

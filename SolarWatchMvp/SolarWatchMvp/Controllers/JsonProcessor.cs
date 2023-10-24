@@ -5,15 +5,32 @@ namespace SolarWatchMvp.Controllers;
 
 public class JsonProcessor : IJsonProcessor
 {
-    public CityCoordinate CoordinateProcess(string data)
+    public City CityProcess(string data)
     {
-        var json = JsonDocument.Parse(data);
-
-        return new CityCoordinate
+        var json = JsonDocument.Parse(data).RootElement[0];
+        
+        if (json.TryGetProperty("state", out var stateElement))
         {
-            Latitude = json.RootElement[0].GetProperty("lat").GetDouble(),
-            Longitude = json.RootElement[0].GetProperty("lon").GetDouble()
-        };
+            return new City
+            {
+                Name = json.GetProperty("name").ToString(),
+                Longitude = json.GetProperty("lon").GetDouble(),
+                Latitude = json.GetProperty("lat").GetDouble(),
+                Country = json.GetProperty("country").ToString(),
+                State = stateElement.ToString()
+            };
+        }
+        else
+        {
+            return new City
+            {
+                Name = json.GetProperty("name").ToString(),
+                Longitude = json.GetProperty("lon").GetDouble(),
+                Latitude = json.GetProperty("lat").GetDouble(),
+                Country = json.GetProperty("country").ToString(),
+                State = "-"
+            };
+        }
     }
 
     public SunTime SunTimeProcess(string data)

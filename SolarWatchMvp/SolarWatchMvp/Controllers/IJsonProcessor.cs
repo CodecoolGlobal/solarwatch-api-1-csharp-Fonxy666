@@ -4,6 +4,6 @@ namespace SolarWatchMvp.Controllers;
 
 public interface IJsonProcessor
 {
-    CityCoordinate CoordinateProcess(string data);
+    City CityProcess(string data);
     SunTime SunTimeProcess(string data);
 }

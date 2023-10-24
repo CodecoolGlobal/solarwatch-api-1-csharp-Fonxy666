@@ -15,6 +15,7 @@ public class OpenWeatherMapApi : IWeatherDataProvider
     {
         const string apIkey = "dff12a8fd6946ce444e8f792f93eefb4";
         var url = $"https://api.openweathermap.org/geo/1.0/direct?q={cityName}&limit=5&appid={apIkey}";
+        /*https://api.openweathermap.org/geo/1.0/direct?q=Budapest&limit=5&appid=dff12a8fd6946ce444e8f792f93eefb4*/
 
         var client = new HttpClient();
 

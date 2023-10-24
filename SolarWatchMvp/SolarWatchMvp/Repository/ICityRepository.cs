@@ -1,4 +1,6 @@
-﻿namespace SolarWatchMvp.Repository;
+﻿using SolarWatchMvp.Model;
+
+namespace SolarWatchMvp.Repository;
 
 public interface ICityRepository
 {

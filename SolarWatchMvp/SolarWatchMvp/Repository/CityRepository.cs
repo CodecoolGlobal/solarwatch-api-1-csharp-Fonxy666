@@ -1,39 +1,41 @@
 ﻿using SolarWatchMvp.Data;
+using SolarWatchMvp.Model;
 
 namespace SolarWatchMvp.Repository;
 
 public class CityRepository : ICityRepository
 {
+    private readonly WeatherApiContext _context;
+
+    public CityRepository(WeatherApiContext context)
+    {
+        _context = context;
+    }
     public IEnumerable<City> GetAll()
     {
-        using var dbContext = new WeatherApiContext();
-        return dbContext.Cities.ToList();
+        return _context.Cities.ToList();
     }
 
     public City? GetByName(string name)
     {
-        using var dbContext = new WeatherApiContext();
-        return dbContext.Cities.FirstOrDefault(city => city.Name == name);
+        return _context.Cities.FirstOrDefault(city => city.Name == name);
     }
 
     public void Add(City city)
     {
-        using var dbContext = new WeatherApiContext();
-        dbContext.Cities.Add(city);
-        dbContext.SaveChanges();
+        _context.Cities.Add(city);
+        _context.SaveChanges();
     }
 
     public void Delete(City city)
     {
-        using var dbContext = new WeatherApiContext();
-        dbContext.Cities.Remove(city);
-        dbContext.SaveChanges();
+        _context.Cities.Remove(city);
+        _context.SaveChanges();
     }
 
     public void Update(City city)
     {
-        using var dbContext = new WeatherApiContext();
-        dbContext.Cities.Update(city);
-        dbContext.SaveChanges();
+        _context.Cities.Update(city);
+        _context.SaveChanges();
     }
 }

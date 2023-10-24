@@ -5,34 +5,37 @@ namespace SolarWatchMvp.Repository;
 
 public class SunTimeRepository : ISunTimeRepository
 {
+    
+    private readonly WeatherApiContext _context;
+
+    public SunTimeRepository(WeatherApiContext context)
+    {
+        _context = context;
+    }
+    
     public IEnumerable<SunTime> GetAll()
     {
-        using var dbContext = new WeatherApiContext();
-        return dbContext.SunTimes.ToList();
+        return _context.SunTimes.ToList();
     }
 
     public SunTime? GetByName(int id)
     {
-        using var dbContext = new WeatherApiContext();
-        return dbContext.SunTimes.FirstOrDefault(time => time.Id == id);
+        return _context.SunTimes.FirstOrDefault(time => time.Id == id);
     }
 
     public void Add(SunTime time)
     {
-        using var dbContext = new WeatherApiContext();
-        dbContext.SunTimes.Add(time);
+        _context.SunTimes.Add(time);
     }
 
     public void Delete(SunTime time)
     {
-        using var dbContext = new WeatherApiContext();
-        dbContext.SunTimes.Remove(time);
+        _context.SunTimes.Remove(time);
     }
 
     public void Update(SunTime time)
     {
-        using var dbContext = new WeatherApiContext();
-        dbContext.SunTimes.Update(time);
-        dbContext.SaveChanges();
+        _context.SunTimes.Update(time);
+        _context.SaveChanges();
     }
 }
