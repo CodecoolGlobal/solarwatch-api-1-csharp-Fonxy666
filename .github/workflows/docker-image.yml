@@ -36,4 +36,4 @@ jobs:
           context: ./SolarWatchMvp
           push: true
           tags: fonxy6/solarwatch:latest
-          file: ./SolarWatchMvp/Dockerfile
+          file: ./SolarWatchMvp
