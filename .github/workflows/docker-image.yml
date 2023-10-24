@@ -33,7 +33,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ./SolarWatchMvp
+          context: ./
           push: true
           tags: fonxy6/solarwatch:latest
-          file: ./SolarWatchMvp
+          file: ./Dockerfile
