@@ -5,8 +5,8 @@ namespace SolarWatchMvp.Data
 {
     public class WeatherApiContext : DbContext
     {
-        public DbSet<City> Cities { get; set; }
-        public DbSet<SunTime> SunTimes { get; set; }
+        public DbSet<City>? Cities { get; set; }
+        public DbSet<SunTime>? SunTimes { get; set; }
         
         public WeatherApiContext(DbContextOptions<WeatherApiContext> options) : base(options)
         {

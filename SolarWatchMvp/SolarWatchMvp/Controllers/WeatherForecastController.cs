@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SolarWatchMvp.Data;
@@ -22,7 +23,7 @@ public class WeatherForecastController : ControllerBase
         _repository = weatherApiContext;
     }
     
-    [HttpGet("Get")]
+    [HttpGet("Get"), Authorize]
     public async Task<ActionResult<SunTime>> GetSunTime(string name)
     {
         try
