@@ -24,7 +24,6 @@ public class WeatherForecastController : ControllerBase
     {
         try
         {
-            // Check if the data already exists in the database
             var existingCity = await _repository.Cities!.FirstOrDefaultAsync(c => c.Name == name);
             if (existingCity == null)
             {

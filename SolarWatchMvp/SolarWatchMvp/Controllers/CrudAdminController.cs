@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SolarWatchMvp.Data;
 using SolarWatchMvp.Model;
-using SolarWatchMvp.Services;
 
 namespace SolarWatchMvp.Controllers;
 

@@ -32,5 +32,6 @@ public class Tests
         var result = _controllerMock.GetSunTime("Budapest");
         
         Assert.That(result.Result, Is.InstanceOf(typeof(ActionResult<SunTime>)));
+        Assert.That(result.IsCompleted);
     }
 }

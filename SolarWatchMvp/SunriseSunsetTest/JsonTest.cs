@@ -16,7 +16,7 @@ public class JsonProcessorTests
     [Test]
     public void CoordinateProcess_ValidData_ReturnsCityCoordinate()
     {
-        const string dataWithOutState = "[{\"name\": \"Budapest\", \"lat\": 40.7128, \"lon\": -74.0060, \"state\": \"-\", \"country\": \"HU\"}]";
+        const string dataWithOutState = "[{\"name\": \"Budapest\", \"lat\": 40.7128, \"lon\": -74.0060, \"country\": \"HU\"}]";
         const string dataWithState = "[{\"name\": \"Chicago\", \"lat\": 41.8755616, \"lon\": -87.6244212, \"state\": \"Illinois\", \"country\": \"US\"}]";
         
         var resultWithOutState = jsonProcessor.CityProcess(dataWithOutState);
@@ -43,15 +43,11 @@ public class JsonProcessorTests
     [Test]
     public void SunTimeProcess_ValidData_ReturnsSolarWatch()
     {
-        // Arrange
         const string data = "{\"results\":{\"sunrise\":\"2023-10-14T06:45:00+00:00\",\"sunset\":\"2023-10-14T18:20:00+00:00\"}}";
-
-        // Act
+        
         var result = jsonProcessor.SunTimeProcess(data);
         Assert.Multiple(() =>
         {
-
-            // Assert
             Assert.That(result.SunRiseTime, Is.EqualTo("2023-10-14T06:45:00+00:00"));
             Assert.That(result.SunSetTime, Is.EqualTo("2023-10-14T18:20:00+00:00"));
         });
