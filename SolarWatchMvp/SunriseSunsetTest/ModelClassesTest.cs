@@ -15,15 +15,7 @@ public class CityCoordinateTests
         const string expectedState = "-";
         const string expectedCountry = "HU";
 
-        var cityCoordinate = new City
-        {
-            Id = expectedId,
-            Name = expectedName,
-            Latitude = expectedLatitude,
-            Longitude = expectedLongitude,
-            State = expectedState,
-            Country = expectedCountry
-        };
+        var cityCoordinate = new City(expectedName, expectedLongitude, expectedLatitude, expectedState, expectedCountry) { Id = expectedId };
         Assert.Multiple(() =>
         {
             Assert.That(cityCoordinate.Id, Is.EqualTo(expectedId), "Id should be set to the provided value.");
@@ -47,13 +39,9 @@ public class SolarWatchTest
         const string expectedSunRiseDate = "2000-01-01";
         const string expectedSunSetDate = "2000-01-01";
 
-        var solarWatch = new SunTime
-        {
-            Id = expectedId,
-            CityId = expectedCityId,
-            SunRiseTime = expectedSunRiseDate,
-            SunSetTime = expectedSunSetDate
-        };
+        var solarWatch = new SunTime(expectedSunRiseDate, expectedSunSetDate)
+            { Id = expectedId, CityId = expectedCityId };
+            
         Assert.Multiple(() =>
         {
             Assert.That(solarWatch.Id, Is.EqualTo(expectedId), "Id should be set to the provided value.");

@@ -11,7 +11,6 @@ public class Tests
 {
     private Mock<ILogger<WeatherForecastController>> _loggerMock;
     private Mock<IWeatherDataProvider> _weatherDataProviderMock;
-    private Mock<IJsonProcessor> _jsonProcessorMock;
     private Mock<WeatherApiContext> _repositoryMock;
     private WeatherForecastController _controllerMock;
     
@@ -20,9 +19,8 @@ public class Tests
     {
         _loggerMock = new Mock<ILogger<WeatherForecastController>>();
         _weatherDataProviderMock = new Mock<IWeatherDataProvider>();
-        _jsonProcessorMock = new Mock<IJsonProcessor>();
         _repositoryMock = new Mock<WeatherApiContext>();
-        _controllerMock = new WeatherForecastController(_loggerMock.Object, _weatherDataProviderMock.Object, _jsonProcessorMock.Object, _repositoryMock.Object);
+        _controllerMock = new WeatherForecastController(_loggerMock.Object, _repositoryMock.Object);
     }
 
     [Test]

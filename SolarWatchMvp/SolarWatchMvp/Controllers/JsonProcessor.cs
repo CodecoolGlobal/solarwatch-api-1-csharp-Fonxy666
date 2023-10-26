@@ -11,25 +11,20 @@ public class JsonProcessor : IJsonProcessor
         
         if (json.TryGetProperty("state", out var stateElement))
         {
-            return new City
-            {
-                Name = json.GetProperty("name").ToString(),
-                Longitude = json.GetProperty("lon").GetDouble(),
-                Latitude = json.GetProperty("lat").GetDouble(),
-                Country = json.GetProperty("country").ToString(),
-                State = stateElement.ToString()
-            };
+            return new City(json.GetProperty("name").ToString(),
+                json.GetProperty("lon").GetDouble(),
+                json.GetProperty("lat").GetDouble(),
+                stateElement.ToString(),
+                json.GetProperty("country").ToString());
         }
         else
         {
-            return new City
-            {
-                Name = json.GetProperty("name").ToString(),
-                Longitude = json.GetProperty("lon").GetDouble(),
-                Latitude = json.GetProperty("lat").GetDouble(),
-                Country = json.GetProperty("country").ToString(),
-                State = "-"
-            };
+            return new City(json.GetProperty("name").ToString(),
+                json.GetProperty("lon").GetDouble(),
+                json.GetProperty("lat").GetDouble(),
+                "-",
+                json.GetProperty("country").ToString()
+                );
         }
     }
 
@@ -38,10 +33,6 @@ public class JsonProcessor : IJsonProcessor
         var json = JsonDocument.Parse(data);
         var results = json.RootElement.GetProperty("results");
 
-        return new SunTime
-        {
-            SunRiseTime = results.GetProperty("sunrise").ToString(),
-            SunSetTime = results.GetProperty("sunset").ToString()
-        };
+        return new SunTime(results.GetProperty("sunrise").ToString(), results.GetProperty("sunset").ToString());
     }
 }

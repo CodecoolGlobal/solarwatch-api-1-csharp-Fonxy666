@@ -21,7 +21,6 @@ var app = builder.Build();
 
 AddRoles();
 
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

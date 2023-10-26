@@ -2,7 +2,7 @@
 using SolarWatchMvp.Contracts;
 using SolarWatchMvp.Services;
 
-namespace SolarWatchMvp.Controllers.RegController;
+namespace SolarWatchMvp.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -23,7 +23,7 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var result = await _authenticationService.RegisterAsync(request.Email, request.Username, request.Password, "Admin");
+        var result = await _authenticationService.RegisterAsync(request.Email, request.Username, request.Password, "User");
 
         if (!result.Success)
         {
