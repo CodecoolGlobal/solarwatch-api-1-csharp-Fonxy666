@@ -5,6 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 
 import Layout from "./Pages/Layout";
 import UserCreator from "./Pages/UserCreator";
+import Login from "./Pages/Login";
 
 const App = () => {
 
@@ -23,7 +24,7 @@ const App = () => {
         },
         {
           path: "/login",
-          element: <UserCreator />,
+          element: <Login />,
         },
       ],
     },

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserForm from "../Components/UserForm";
+import Login from "../Components/Login/Login";
+import Cookies from "js-cookie";
 
-const createUser = (user) => {
-    return fetch("http://localhost:5120/Auth/Register", {
+const postLogin = (user) => {
+    return fetch("http://localhost:5120/Auth/Login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -12,16 +13,18 @@ const createUser = (user) => {
     }).then((res) => res.json());
   };
 
-const UserCreator = () => {
+const UserLogin = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const handleCreateUser = (user) => {
+  const handleOnLogin = (user) => {
     setLoading(true);
 
-    createUser(user)
-      .then(() => {
+    postLogin(user)
+      .then((data) => {
         setLoading(false);
+        const expires = new Date(new Date().getTime() + 60000);
+        Cookies.set("jwtToken", data.token, { expires });
         navigate("/");
       })
     };
@@ -31,11 +34,11 @@ const UserCreator = () => {
     };
 
   return (
-    <UserForm
-        onSave = { handleCreateUser }
-        onCancel = { handleCancel }
+    <Login
+      onLogin = { handleOnLogin }
+      onCancel = { handleCancel }
     />
   );
 };
 
-export default UserCreator;
+export default UserLogin;

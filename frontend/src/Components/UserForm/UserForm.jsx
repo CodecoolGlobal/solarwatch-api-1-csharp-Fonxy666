@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Loading from "../Loading/Loading";
 
 const UserForm = ({ onSave, user, onCancel }) => {
@@ -57,6 +57,16 @@ const UserForm = ({ onSave, user, onCancel }) => {
 
       <div className="control">
         <label htmlFor="password">Password:</label>
+        <input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          name="password"
+          id="password"
+        />
+      </div>
+
+      <div className="control">
+        <label htmlFor="password">Repeat Password:</label>
         <input
           value={password}
           onChange={(e) => setPassword(e.target.value)}
