@@ -10,7 +10,9 @@ using SolarWatchMvp.Repository;
 using SolarWatchMvp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
+AddCors();
 AddServices();
 AddDbContext();
 AddAuthentication();
@@ -28,6 +30,7 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+app.UseCors("MyPolicy");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -36,6 +39,20 @@ app.MapControllers();
 AddAdmin();
 
 app.Run();
+
+void AddCors()
+{
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("MyPolicy",
+            builder =>
+            {
+                builder.WithOrigins("http://localhost:3000")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+    });
+}
 
 void AddServices()
 {
