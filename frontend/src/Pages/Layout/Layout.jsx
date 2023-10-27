@@ -6,7 +6,6 @@ import "./Layout.css";
 const Layout = () => {
   const location = useLocation();
   const [jwtToken, setJwtToken] = useState(Cookies.get("jwtToken"));
-  console.log(Cookies.get("jwtToken"));
 
   useEffect(() => {
     const token = Cookies.get("jwtToken");

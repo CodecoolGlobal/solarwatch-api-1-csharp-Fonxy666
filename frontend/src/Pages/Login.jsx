@@ -19,15 +19,23 @@ const UserLogin = () => {
 
   const handleOnLogin = (user) => {
     setLoading(true);
-
+  
     postLogin(user)
       .then((data) => {
         setLoading(false);
-        const expires = new Date(new Date().getTime() + 60000);
-        Cookies.set("jwtToken", data.token, { expires });
-        navigate("/");
+        if (data.token) {
+          const expires = new Date(new Date().getTime() + 60000);
+          Cookies.set("jwtToken", data.token, { expires });
+          navigate("/");
+        } else {
+          console.log("Login unsuccessful. Please check your credentials.");
+        }
       })
-    };
+      .catch((error) => {
+        setLoading(false);
+        console.error("Error occurred during login:", error);
+      });
+  };
 
     const handleCancel = () => {
         navigate("/");
