@@ -10,7 +10,6 @@ using SolarWatchMvp.Repository;
 using SolarWatchMvp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 AddCors();
 AddServices();
