@@ -21,6 +21,10 @@ const App = () => {
           path: "/reg",
           element: <UserCreator />,
         },
+        {
+          path: "/login",
+          element: <UserCreator />,
+        },
       ],
     },
   ]);
