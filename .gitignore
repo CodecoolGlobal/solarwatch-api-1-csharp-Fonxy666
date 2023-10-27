@@ -475,3 +475,11 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+SolarWatchMvp/SolarWatchMvp/Migrations/20231024054348_InitialCreate.cs
+SolarWatchMvp/SolarWatchMvp/Migrations/20231024054348_InitialCreate.Designer.cs
+SolarWatchMvp/SolarWatchMvp/Migrations/WeatherApiContextModelSnapshot.cs
+SolarWatchMvp/SolarWatchMvp/Migrations/Users/20231025072804_initialMigration.cs
+SolarWatchMvp/SolarWatchMvp/Migrations/Users/20231025072804_initialMigration.Designer.cs
+SolarWatchMvp/SolarWatchMvp/Migrations/Users/20231025072957_UsersMigration.cs
+SolarWatchMvp/SolarWatchMvp/Migrations/Users/20231025072957_UsersMigration.Designer.cs
+SolarWatchMvp/SolarWatchMvp/Migrations/Users/UsersContextModelSnapshot.cs
