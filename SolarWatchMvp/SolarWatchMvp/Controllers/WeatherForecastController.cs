@@ -36,8 +36,14 @@ public class WeatherForecastController : ControllerBase
             {
                 return Ok(existingCity);
             }
+            
+            var result = new {
+                Name = existingCity.Name,
+                SunRiseTime = existingSunTime.SunRiseTime,
+                SunSetTime = existingSunTime.SunSetTime
+            };
 
-            return Ok($"Name: {existingCity.Name} SunRiseTime: {existingSunTime.SunRiseTime}, SunSetTime: {existingSunTime.SunSetTime}");
+            return Ok(result);
         }
         catch (Exception e)
         {

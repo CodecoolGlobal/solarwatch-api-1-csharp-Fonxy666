@@ -27,7 +27,12 @@ const Layout = () => {
             </Link>
           {jwtToken ? (
             <li>
-              <button type="button" onClick={handleLogout}>
+              <Link to="/solar-watch">
+                <button type="button">
+                  Solar-watch
+                </button>
+              </Link>
+              <button type="button" onClick = { handleLogout }>
                 Logout
               </button>
             </li>

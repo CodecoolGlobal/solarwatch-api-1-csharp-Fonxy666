@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Login from "../Components/Login/Login";
 import Cookies from "js-cookie";
+import Loading from "../Components/Loading/Loading";
 
 const postLogin = (user) => {
     return fetch("http://localhost:5120/Auth/Login", {
@@ -24,8 +25,7 @@ const UserLogin = () => {
       .then((data) => {
         setLoading(false);
         if (data.token) {
-          const expires = new Date(new Date().getTime() + 60000);
-          Cookies.set("jwtToken", data.token, { expires });
+          Cookies.set("jwtToken", data.token, { expires: 1 });
           navigate("/");
         } else {
           console.log("Login unsuccessful. Please check your credentials.");
@@ -37,9 +37,13 @@ const UserLogin = () => {
       });
   };
 
-    const handleCancel = () => {
-        navigate("/");
-    };
+  const handleCancel = () => {
+      navigate("/");
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Login

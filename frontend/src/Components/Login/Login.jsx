@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Loading from "../Loading/Loading";
 
-const UserForm = ({ onLogin, user, onCancel }) => {
+const Login = ({ onLogin, user, onCancel }) => {
 
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState(user?.username ?? "");
@@ -55,4 +55,4 @@ const UserForm = ({ onLogin, user, onCancel }) => {
   );
 };
 
-export default UserForm;
+export default Login;

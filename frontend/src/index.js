@@ -1,30 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
+import Cookies from "js-cookie";
 
 import Layout from "./Pages/Layout";
 import UserCreator from "./Pages/UserCreator";
 import Login from "./Pages/Login";
+import SolarWatch from "./Pages/SolarWatch";
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const checkIfUserIsAuthenticated = () => {
+    return Cookies.get("jwtToken");
+  };
+
+  useEffect(() => {
+    const jwtToken = checkIfUserIsAuthenticated();
+    setIsAuthenticated(!jwtToken);
+  }, []);
 
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <Layout/>,
+      path: '/',
+      element: <Layout />,
       children: [
         {
-          path: "/",
+          path: '/',
           element: <div className="welcome-text">Welcome to the page!</div>,
         },
         {
-          path: "/reg",
+          path: '/reg',
           element: <UserCreator />,
         },
         {
-          path: "/login",
+          path: '/login',
           element: <Login />,
+        },
+        {
+          path: '/solar-watch',
+          element: isAuthenticated ? <SolarWatch /> : <Navigate to="/login" />,
         },
       ],
     },

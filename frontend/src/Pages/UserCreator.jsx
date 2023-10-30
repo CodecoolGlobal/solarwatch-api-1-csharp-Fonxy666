@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserForm from "../Components/UserForm";
+import Loading from "../Components/Loading/Loading";
 
 const createUser = (user) => {
     return fetch("http://localhost:5120/Auth/Register", {
@@ -29,6 +30,10 @@ const UserCreator = () => {
     const handleCancel = () => {
         navigate("/");
     };
+
+    if (loading) {
+      return <Loading />;
+    }
 
   return (
     <UserForm
