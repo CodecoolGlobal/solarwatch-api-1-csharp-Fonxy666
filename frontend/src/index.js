@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import Cookies from "js-cookie";
+import './index.css';
 
 import Layout from "./Pages/Layout";
 import UserCreator from "./Pages/UserCreator";
@@ -36,7 +37,7 @@ const App = () => {
         },
         {
           path: '/login',
-          element: <Login />,
+          element: isAuthenticated ? <Login /> : <div className="welcome-text">You are already logged in!</div>
         },
         {
           path: '/solar-watch',

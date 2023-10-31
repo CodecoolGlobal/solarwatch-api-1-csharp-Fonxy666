@@ -14,7 +14,6 @@ public class AuthService : IAuthService
         _tokenService = tokenService;
     }
 
-
     public async Task<AuthResult> RegisterAsync(string email, string username, string password, string role)
     {
         var user = new IdentityUser { UserName = username, Email = email };

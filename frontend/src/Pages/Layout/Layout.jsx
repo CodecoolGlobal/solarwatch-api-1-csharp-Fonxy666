@@ -21,27 +21,26 @@ const Layout = () => {
     <div className="Layout">
       <nav>
         <ul>
-          <li className="grow">Solarwatch</li>
-            <Link to="/reg">
-              <button type="button">Registration</button>
-            </Link>
+          <Link to="/reg">
+            <button className = "button" type="button">Registration</button>
+          </Link>
           {jwtToken ? (
-            <li>
+            <div>
               <Link to="/solar-watch">
-                <button type="button">
+                <button className = "button" type="button">
                   Solar-watch
                 </button>
               </Link>
-              <button type="button" onClick = { handleLogout }>
+              <button className = "button" type="button" onClick = { handleLogout }>
                 Logout
               </button>
-            </li>
+            </div>
           ) : (
-            <li>
+            <div>
               <Link to="/login">
-                <button type="button">Login</button>
+                <button className = "button" type="button">Login</button>
               </Link>
-            </li>
+            </div>
           )}
         </ul>
       </nav>

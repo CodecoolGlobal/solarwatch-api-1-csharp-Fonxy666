@@ -23,39 +23,41 @@ const SolarWatch = ({ onGet, country, onCancel }) => {
     <form className="EmployeeForm" onSubmit={onSubmit}>
       
       <div className="control">
-        <label htmlFor="name">Get:</label>
+        <label className = "text" htmlFor="name">Get:</label>
         <input
           value={getName}
           onChange={(e) => setGetName(e.target.value)}
           name="name"
           id="name"
+          className="input-field"
         />
       </div>
 
       <div className="buttons">
-        <button type="submit" >
+        <button className = "button" type="submit" >
           Get country
         </button>
-        <button type="button" onClick = { onCancel }>
+        <button className = "button" type="button" onClick = { onCancel }>
           Cancel
         </button>
       </div>
       
       <div className="control">
-        <label htmlFor="name">Post:</label>
+        <label className = "text" htmlFor="name">Post:</label>
         <input
           value={postCountryName}
           onChange={(e) => setostCountryName(e.target.value)}
           name="name"
           id="name"
+          className="input-field"
         />
       </div>
 
       <div className="buttons">
-        <button type="submit">
+        <button className = "button" type="submit">
           Post country
         </button>
-        <button type="button" onClick = { onCancel }>
+        <button className = "button" type="button" onClick = { onCancel }>
           Cancel
         </button>
       </div>
