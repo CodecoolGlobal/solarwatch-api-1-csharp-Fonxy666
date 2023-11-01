@@ -12,14 +12,15 @@ import SolarWatch from "./Pages/SolarWatch";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  
   const checkIfUserIsAuthenticated = () => {
     return Cookies.get("jwtToken");
   };
-
+  
   useEffect(() => {
     const jwtToken = checkIfUserIsAuthenticated();
-    setIsAuthenticated(!jwtToken);
+    setIsAuthenticated(!isAuthenticated);
+    console.log(jwtToken);
   }, []);
 
   const router = createBrowserRouter([

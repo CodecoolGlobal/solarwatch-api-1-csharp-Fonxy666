@@ -6,7 +6,7 @@ import Loading from "../Components/Loading/Loading";
 
 const GetCountry = async (city, token) => {
   try {
-    const response = await fetch(`http://localhost:5120/Sunset-Sunrise/Get?name=${city}`, {
+    const response = await fetch(`http://localhost:8080/Sunset-Sunrise/Get?name=${city}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

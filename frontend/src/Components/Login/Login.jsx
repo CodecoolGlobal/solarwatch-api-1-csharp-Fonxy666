@@ -24,30 +24,32 @@ const Login = ({ onLogin, user, onCancel }) => {
     <form className="EmployeeForm" onSubmit={onSubmit}>
 
       <div className="control">
-        <label htmlFor="username">Username:</label>
+        <label className = "text" htmlFor="username">Username:</label>
         <input
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           name="username"
           id="username"
+          className = "text" 
         />
       </div>
 
       <div className="control">
-        <label htmlFor="password">Password:</label>
+        <label className = "text" htmlFor="password">Password:</label>
         <input
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           name="password"
           id="password"
+          className = "text" 
         />
       </div>
 
       <div className="buttons">
-        <button type="submit">
+        <button className = "button" type="submit">
           Login
         </button>
-        <button type="button" onClick = { onCancel }>
+        <button className = "button" type="button" onClick = { onCancel }>
           Cancel
         </button>
       </div>
