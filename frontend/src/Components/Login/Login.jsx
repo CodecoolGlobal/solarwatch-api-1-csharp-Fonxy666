@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Loading from "../Loading/Loading";
-import { ButtonContainer } from "../../Components/Styles/Buttoncontainer.styled";
+import { ButtonContainer } from "../../Components/Styles/ButtonContainer.styled";
 import { ButtonRowContainer } from "../../Components/Styles/ButtonRow.styled";
 import { TextContainer } from "../Styles/TextContainer.styled";
-import { LoginForm } from "../Styles/LoginForm.styled";
+import { Form, FormRow } from "../Styles/Form.styled";
 import { InputForm, InputWrapper } from "../Styles/Input.styled";
 
 const Login = ({ onLogin, user, onCancel }) => {
@@ -26,37 +26,42 @@ const Login = ({ onLogin, user, onCancel }) => {
   }
 
   return (
-    <LoginForm className="EmployeeForm" onSubmit={onSubmit}>
+    <Form className="EmployeeForm" onSubmit={onSubmit}>
 
-      <TextContainer>Username:</TextContainer>
-      <InputWrapper>
-        <InputForm
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          name="username"
-          id="username"
-        />
-      </InputWrapper>
+      <FormRow>
+        <TextContainer>Username:</TextContainer>
+        <InputWrapper>
+          <InputForm
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            name="username"
+            id="username"
+          />
+        </InputWrapper>
+      </FormRow>
 
-      <TextContainer>Password:</TextContainer>
-      <InputWrapper>
-        <InputForm
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          name="password"
-          id="password"
-        />
-      </InputWrapper>
+      <FormRow>
+        <TextContainer>Password:</TextContainer>
+        <InputWrapper>
+          <InputForm
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            id="password"
+          />
+        </InputWrapper>
+      </FormRow>
 
-      <ButtonRowContainer className="buttons">
-        <ButtonContainer className = "button" type="submit">
+
+      <ButtonRowContainer>
+        <ButtonContainer type="submit">
           Login
         </ButtonContainer>
-        <ButtonContainer className = "button" type="button" onClick = { onCancel }>
+        <ButtonContainer type="button" onClick = { onCancel }>
           Cancel
         </ButtonContainer>
       </ButtonRowContainer>
-    </LoginForm>
+    </Form>
   );
 };
 

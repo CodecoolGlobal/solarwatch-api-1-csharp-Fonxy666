@@ -27,6 +27,52 @@ const GetCountry = async (city, token) => {
   }
 };
 
+const PostCountry = async (city, token) => {
+  try {
+    const response = await fetch(`http://localhost:8080/CrudAdmin/Post?name=${city}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorMessage = `HTTP error! Status: ${response.status}`;
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error occurred during fetch:", error);
+    throw error;
+  }
+};
+
+const DeleteCountry = async (id, token) => {
+  try {
+    const response = await fetch(`http://localhost:8080/CrudAdmin/Delete?id=${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorMessage = `HTTP error! Status: ${response.status}`;
+      throw new Error(errorMessage);
+    }
+
+    const data = await response;
+    return data;
+  } catch (error) {
+    console.error("Error occurred during fetch:", error);
+    throw error;
+  }
+};
+
 const CountryGet = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -39,13 +85,46 @@ const CountryGet = () => {
     GetCountry(city, token)
       .then((data) => {
         setLoading(false);
-        console.log("Response from server:", data);
+        alert(`City (${city}) got from database!`);
+        navigate("/city");
       })
       .catch((error) => {
         setLoading(false);
+        alert(`There is no City: ${city} in our database!`);
         console.error("Error occurred during login:", error);
       });
   };
+
+  const handlePost = (city) => {
+    setLoading(true);
+  
+    const token = getToken();
+  
+    PostCountry(city, token)
+      .then((data) => {
+        setLoading(false);
+        alert(`City (${city}) added to the database!`)
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error(`Error addign ${city} to the database!`, error);
+      });
+  };
+
+  const handleDelete = (id) => {
+    setLoading(true);
+    const token = getToken();
+  
+    DeleteCountry(id, token)
+      .then((data) => {
+        setLoading(false);
+        alert(`City with id (${id}) deleted from the database!`);
+      })
+      .catch((error) => {
+        setLoading(false);
+        console.error(`Error deleting id: (${id}) from the database!`, error);
+      });
+  }
 
   const getToken = () => {
     return Cookies.get("jwtToken");
@@ -62,6 +141,8 @@ const CountryGet = () => {
   return (
     <SolarWatch
       onGet = { handleGet }
+      onPost = { handlePost }
+      onDelete = { handleDelete }
       onCancel = { handleCancel }
     />
   );

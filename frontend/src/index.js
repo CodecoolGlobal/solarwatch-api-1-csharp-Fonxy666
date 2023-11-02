@@ -8,6 +8,7 @@ import Layout from "./Pages/Layout";
 import UserCreator from "./Pages/UserCreator";
 import Login from "./Pages/Login";
 import SolarWatch from "./Pages/SolarWatch";
+import ShowCountry from "./Pages/ShowCountry";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -19,7 +20,6 @@ const App = () => {
   useEffect(() => {
     const jwtToken = checkIfUserIsAuthenticated();
     setIsAuthenticated(!isAuthenticated);
-    console.log(jwtToken);
   }, []);
 
   const router = createBrowserRouter([
@@ -43,6 +43,10 @@ const App = () => {
           path: '/solar-watch',
           element: isAuthenticated ? <SolarWatch /> : <Navigate to="/login" />,
         },
+        {
+          path: '/city',
+          element: <ShowCountry/>
+        }
       ],
     },
   ]);

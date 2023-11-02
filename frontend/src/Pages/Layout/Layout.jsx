@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { ButtonContainer } from "../../Components/Styles/Buttoncontainer.styled";
+import { ButtonContainer } from "../../Components/Styles/ButtonContainer.styled";
 import { ButtonRowContainer } from "../../Components/Styles/ButtonRow.styled";
+import '../../index.css';
 
 const Layout = () => {
   const location = useLocation();
@@ -26,19 +27,19 @@ const Layout = () => {
         {!jwtToken ? (
           <ButtonRowContainer>
             {location.pathname !== "/login" && (
-              <Link to="/login">
+              <Link to="/login" className="link">
                 <ButtonContainer type="button">Login</ButtonContainer>
               </Link>
             )}
-            <Link to="/reg">
+            <Link to="/reg" className="link">
               <ButtonContainer type="button">Registration</ButtonContainer>
             </Link>
           </ButtonRowContainer>
         ) : (
           <ButtonRowContainer>
-            <button className = "button" type="button" onClick = { handleLogout }>Logout</button>
-            <Link to="/solar-watch">
-              <button className = "button" type="button">Solar-watch</button>
+            <ButtonContainer type="button" onClick = { handleLogout }>Logout</ButtonContainer>
+            <Link to="/solar-watch" className="link">
+              <ButtonContainer type="button">Solar-watch</ButtonContainer>
             </Link>
           </ButtonRowContainer>
           )}

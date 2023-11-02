@@ -1,68 +1,114 @@
 import { useState } from "react";
-import Loading from "../Loading/Loading";
+import { ButtonContainer } from "../Styles/ButtonContainer.styled";
+import { ButtonRowButtonContainer } from "../../Components/Styles/ButtonRow.styled";
+import { TextContainer } from "../Styles/TextContainer.styled";
+import { FormRow, Form } from "../Styles/Form.styled";
+import { InputForm, InputWrapper } from "../Styles/Input.styled";
 
-const SolarWatch = ({ onGet, country, onCancel }) => {
+const SolarWatch = ({ onGet, onPost, onDelete, country, onCancel }) => {
 
-  const [loading, setLoading] = useState(false);
-  const [getName, setGetName] = useState(country?.name ?? "");
-  const [postCountryName, setostCountryName] = useState(country?.name ?? "");
+  const [getCountryName, setGetCountryName] = useState(country?.name ?? "");
+  const [deleteCountryName, setDeleteCountryName] = useState(country?.name ?? "");
+  const [postCountryName, setPostCountryName] = useState(country?.name ?? "");
 
-  const onSubmit = (e) => {
+  const [action, setAction] = useState("");
+  console.log(action);
+
+  const handleGetSubmit = (e) => {
     e.preventDefault();
-
-    return onGet(
-      getName
-    );
+    onGet(getCountryName);
   };
 
-  if (loading) {
-    return <Loading />;
-  }
+  const handlePostSubmit = (e) => {
+    e.preventDefault();
+    onPost(postCountryName);
+  };
+
+  const handleDeleteSubmit = (e) => {
+    e.preventDefault();
+    onDelete(deleteCountryName);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (action === "get") {
+      handleGetSubmit(e);
+    } else if (action === "post") {
+      handlePostSubmit(e);
+    } else if (action === "delete") {
+      handleDeleteSubmit(e);
+    }
+  };
+
 
   return (
-    <form className="EmployeeForm" onSubmit={onSubmit}>
+    <Form onSubmit={handleSubmit}>
       
-      <div className="control">
-        <label className = "text" htmlFor="name">Get:</label>
-        <input
-          value={getName}
-          onChange={(e) => setGetName(e.target.value)}
-          name="name"
-          id="name"
-          className="input-field"
-        />
-      </div>
+      <FormRow>
+        <TextContainer>Get:</TextContainer>
+        <InputWrapper>
+          <InputForm
+            value={getCountryName}
+            onChange={(e) => setGetCountryName(e.target.value)}
+            name="name"
+            id="name"
+          />
+        </InputWrapper>
 
-      <div className="buttons">
-        <button className = "button" type="submit" >
-          Get country
-        </button>
-        <button className = "button" type="button" onClick = { onCancel }>
-          Cancel
-        </button>
-      </div>
+        <ButtonRowButtonContainer>
+          <ButtonContainer type="submit" onClick={() => setAction("get")}>
+            Get country
+          </ButtonContainer>
+          <ButtonContainer type="button" onClick = { onCancel }>
+            Cancel
+          </ButtonContainer>
+        </ButtonRowButtonContainer>
+      </FormRow>
+
       
-      <div className="control">
-        <label className = "text" htmlFor="name">Post:</label>
-        <input
-          value={postCountryName}
-          onChange={(e) => setostCountryName(e.target.value)}
-          name="name"
-          id="name"
-          className="input-field"
-        />
-      </div>
+      <FormRow>
+        <TextContainer>Post:</TextContainer>
+        <InputWrapper>
+          <InputForm
+            value={postCountryName}
+            onChange={(e) => setPostCountryName(e.target.value)}
+            name="name"
+            id="name"
+          />
+        </InputWrapper>
 
-      <div className="buttons">
-        <button className = "button" type="submit">
-          Post country
-        </button>
-        <button className = "button" type="button" onClick = { onCancel }>
-          Cancel
-        </button>
-      </div>
+        <ButtonRowButtonContainer>
+          <ButtonContainer type="submit" onClick={() => setAction("post")}>
+            Post country
+          </ButtonContainer>
+          <ButtonContainer type="button" onClick = { onCancel }>
+            Cancel
+          </ButtonContainer>
+        </ButtonRowButtonContainer>
+      </FormRow>
 
-    </form>
+      <FormRow>
+        <TextContainer>Delete:</TextContainer>
+        <InputWrapper>
+          <InputForm
+            value={deleteCountryName}
+            onChange={(e) => setDeleteCountryName(e.target.value)}
+            name="name"
+            id="name"
+          />
+        </InputWrapper>
+
+        <ButtonRowButtonContainer>
+          <ButtonContainer type="submit" onClick={() => setAction("delete")}>
+            Delete country
+          </ButtonContainer>
+          <ButtonContainer type="button" onClick = { onCancel }>
+            Cancel
+          </ButtonContainer>
+        </ButtonRowButtonContainer>
+      </FormRow>
+
+    </Form>
   );
 };
 

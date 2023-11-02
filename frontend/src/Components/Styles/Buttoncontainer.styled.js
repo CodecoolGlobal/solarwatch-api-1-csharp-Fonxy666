@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const ButtonContainer = styled.button`
+margin-top: 20px;
   position: relative;
   width: 120px;
   height: 40px;
