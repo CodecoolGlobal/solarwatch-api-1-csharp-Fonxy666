@@ -1,5 +1,10 @@
 import { useState } from "react";
 import Loading from "../Loading/Loading";
+import { ButtonContainer } from "../../Components/Styles/Buttoncontainer.styled";
+import { ButtonRowContainer } from "../../Components/Styles/ButtonRow.styled";
+import { TextContainer } from "../Styles/TextContainer.styled";
+import { LoginForm } from "../Styles/LoginForm.styled";
+import { InputForm, InputWrapper } from "../Styles/Input.styled";
 
 const Login = ({ onLogin, user, onCancel }) => {
 
@@ -21,39 +26,37 @@ const Login = ({ onLogin, user, onCancel }) => {
   }
 
   return (
-    <form className="EmployeeForm" onSubmit={onSubmit}>
+    <LoginForm className="EmployeeForm" onSubmit={onSubmit}>
 
-      <div className="control">
-        <label className = "text" htmlFor="username">Username:</label>
-        <input
+      <TextContainer>Username:</TextContainer>
+      <InputWrapper>
+        <InputForm
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           name="username"
           id="username"
-          className = "text" 
         />
-      </div>
+      </InputWrapper>
 
-      <div className="control">
-        <label className = "text" htmlFor="password">Password:</label>
-        <input
+      <TextContainer>Password:</TextContainer>
+      <InputWrapper>
+        <InputForm
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           name="password"
           id="password"
-          className = "text" 
         />
-      </div>
+      </InputWrapper>
 
-      <div className="buttons">
-        <button className = "button" type="submit">
+      <ButtonRowContainer className="buttons">
+        <ButtonContainer className = "button" type="submit">
           Login
-        </button>
-        <button className = "button" type="button" onClick = { onCancel }>
+        </ButtonContainer>
+        <ButtonContainer className = "button" type="button" onClick = { onCancel }>
           Cancel
-        </button>
-      </div>
-    </form>
+        </ButtonContainer>
+      </ButtonRowContainer>
+    </LoginForm>
   );
 };
 

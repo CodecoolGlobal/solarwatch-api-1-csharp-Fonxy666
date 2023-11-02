@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import "./Layout.css";
+import { ButtonContainer } from "../../Components/Styles/Buttoncontainer.styled";
+import { ButtonRowContainer } from "../../Components/Styles/ButtonRow.styled";
 
 const Layout = () => {
   const location = useLocation();
@@ -22,25 +23,25 @@ const Layout = () => {
   return (
     <div className="Layout">
       <nav>
-        <ul>
-          {!jwtToken ? (
-            <div>
+        {!jwtToken ? (
+          <ButtonRowContainer>
+            {location.pathname !== "/login" && (
               <Link to="/login">
-                <button className = "button" type="button">Login</button>
+                <ButtonContainer type="button">Login</ButtonContainer>
               </Link>
-              <Link to="/reg">
-                <button className = "button" type="button">Registration</button>
-              </Link>
-            </div>
-          ) : (
-            <div>
-              <button className = "button" type="button" onClick = { handleLogout }>Logout</button>
-              <Link to="/solar-watch">
-                <button className = "button" type="button">Solar-watch</button>
-              </Link>
-            </div>
+            )}
+            <Link to="/reg">
+              <ButtonContainer type="button">Registration</ButtonContainer>
+            </Link>
+          </ButtonRowContainer>
+        ) : (
+          <ButtonRowContainer>
+            <button className = "button" type="button" onClick = { handleLogout }>Logout</button>
+            <Link to="/solar-watch">
+              <button className = "button" type="button">Solar-watch</button>
+            </Link>
+          </ButtonRowContainer>
           )}
-        </ul>
       </nav>
       <Outlet />
     </div>
