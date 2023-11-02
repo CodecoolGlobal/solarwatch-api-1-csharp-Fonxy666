@@ -1,5 +1,10 @@
 import { useState } from "react";
 import Loading from "../Loading/Loading";
+import { ButtonContainer } from "../../Components/Styles/ButtonContainer.styled";
+import { ButtonRowContainer } from "../../Components/Styles/ButtonRow.styled";
+import { TextContainer } from "../Styles/TextContainer.styled";
+import { Form, FormRow } from "../Styles/Form.styled";
+import { InputForm, InputWrapper } from "../Styles/Input.styled";
 
 const UserForm = ({ onSave, user, onCancel }) => {
 
@@ -33,61 +38,65 @@ const UserForm = ({ onSave, user, onCancel }) => {
   }
 
   return (
-    <form className="EmployeeForm" onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit}>
       
-      <div className="control">
-        <label className="text" htmlFor="email">E-mail:</label>
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          name="email"
-          id="email"
-          className="input-field"
-        />
-      </div>
+      <FormRow className="control">
+        <TextContainer>E-mail:</TextContainer>
+        <InputWrapper>
+          <InputForm
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            id="email"
+          />
+        </InputWrapper>
+      </FormRow>
 
-      <div className="control">
-        <label className="text" htmlFor="username">Username:</label>
-        <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          name="username"
-          id="username"
-          className="input-field"
-        />
-      </div>
+      <FormRow className="control">
+        <TextContainer>Username:</TextContainer>
+        <InputWrapper>
+          <InputForm
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            name="username"
+            id="username"
+          />
+        </InputWrapper>
+      </FormRow>
 
-      <div className="control">
-        <label className="text" htmlFor="password">Password:</label>
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          name="password"
-          id="password"
-          className="input-field"
-        />
-      </div>
+      <FormRow className="control">
+        <TextContainer>Password:</TextContainer>
+        <InputWrapper>
+          <InputForm
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            id="password"
+          />
+        </InputWrapper>
+      </FormRow>
 
-      <div className="control">
-        <label className="text" htmlFor="password">Repeat Password:</label>
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          name="password"
-          id="password"
-          className="input-field"
-        />
-      </div>
+      <FormRow className="control">
+        <TextContainer>Repeat Password:</TextContainer>
+        <InputWrapper>
+          <InputForm
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            id="password"
+          />
+        </InputWrapper>
+      </FormRow>
 
-      <div className="buttons">
-        <button className = "button" type="submit">
+      <ButtonRowContainer>
+        <ButtonContainer type="submit">
           {user ? "Update User" : "Create User"}
-        </button>
-        <button className = "button" type="button" onClick = { onCancel }>
+        </ButtonContainer>
+        <ButtonContainer type="button" onClick = { onCancel }>
           Cancel
-        </button>
-      </div>
-    </form>
+        </ButtonContainer>
+      </ButtonRowContainer>
+    </Form>
   );
 };
 

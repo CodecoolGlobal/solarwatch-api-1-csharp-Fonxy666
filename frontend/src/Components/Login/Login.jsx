@@ -26,7 +26,7 @@ const Login = ({ onLogin, user, onCancel }) => {
   }
 
   return (
-    <Form className="EmployeeForm" onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit}>
 
       <FormRow>
         <TextContainer>Username:</TextContainer>
