@@ -32,3 +32,13 @@ export const TextContainer = styled.div`
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 `;
+
+export const TextWrapper = styled.div`
+  margin-top: -600px;
+  margin-left: 50px;
+  margin-right: 1535px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+`;

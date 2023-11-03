@@ -44,7 +44,7 @@ const App = () => {
           element: isAuthenticated ? <SolarWatch /> : <Navigate to="/login" />,
         },
         {
-          path: '/city',
+          path: '/city/:cityName',
           element: <ShowCountry/>
         }
       ],

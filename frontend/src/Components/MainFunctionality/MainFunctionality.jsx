@@ -12,7 +12,6 @@ const SolarWatch = ({ onGet, onPost, onDelete, country, onCancel }) => {
   const [postCountryName, setPostCountryName] = useState(country?.name ?? "");
 
   const [action, setAction] = useState("");
-  console.log(action);
 
   const handleGetSubmit = (e) => {
     e.preventDefault();

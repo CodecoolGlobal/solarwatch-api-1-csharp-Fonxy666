@@ -1,8 +1,52 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import GetImage from '../Components/GetImageForCountry';
+
+const GetCountry = async () => {
+  try {
+    const url = new URL(window.location.href);
+    const cityName = url.pathname.split('/').pop();
+    const response = await fetch(`https://api.pexels.com/v1/search?query=${cityName}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "5a3C9MsrDui8kFqlNHf1Gt0eQCWGPbRP7LKPW9OQhzwd4k0RnOz5DBa6"
+      },
+    });
+
+    if (!response.ok) {
+      const errorMessage = `HTTP error! Status: ${response.status}`;
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+    return data.photos[3].src.large;
+  } catch (error) {
+    console.error("Error occurred during fetch:", error);
+    throw error;
+  }
+};
 
 const ShowCountry = () => {
+  const [imageUrl, setImageUrl] = useState(null);
+
+  const handleGet = async () => {
+    try {
+      const data = await GetCountry();
+      setImageUrl(data);
+    } catch (error) {
+      alert(`There is no City: in our database!`);
+      console.error("Error occurred during login:", error);
+    }
+  };
+
+  useEffect(() => {
+    handleGet();
+  }, []);
+
   return (
-    <div style={{color: 'white'}}>ShowCountry</div>
+    <GetImage
+      city = { imageUrl }
+    />
   )
 }
 

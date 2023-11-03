@@ -85,8 +85,7 @@ const CountryGet = () => {
     GetCountry(city, token)
       .then((data) => {
         setLoading(false);
-        alert(`City (${city}) got from database!`);
-        navigate("/city");
+        navigate(`/city/${city}`, {state: {data} });
       })
       .catch((error) => {
         setLoading(false);
@@ -103,7 +102,6 @@ const CountryGet = () => {
     PostCountry(city, token)
       .then((data) => {
         setLoading(false);
-        alert(`City (${city}) added to the database!`)
       })
       .catch((error) => {
         setLoading(false);
