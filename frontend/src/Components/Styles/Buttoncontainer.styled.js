@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ButtonContainer = styled.button`
-margin-top: 20px;
+  margin-top: 20px;
   position: relative;
   width: 120px;
   height: 40px;
@@ -54,4 +54,9 @@ margin-top: 20px;
   &:active::before {
     transform: scale(0.7);
   }
+`;
+
+export const CancelButtonWrapper = styled.div`
+  margin-top: 50px;
+  margin-left: 130px;
 `;

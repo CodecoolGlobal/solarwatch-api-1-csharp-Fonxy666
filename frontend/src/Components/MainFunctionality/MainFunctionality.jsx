@@ -3,7 +3,7 @@ import { ButtonContainer } from "../Styles/ButtonContainer.styled";
 import { ButtonRowButtonContainer } from "../../Components/Styles/ButtonRow.styled";
 import { TextContainer } from "../Styles/TextContainer.styled";
 import { FormRow, Form } from "../Styles/Form.styled";
-import { InputForm, InputWrapper } from "../Styles/Input.styled";
+import { InputForm, InputWrapper, SelectForm } from "../Styles/Input.styled";
 
 const SolarWatch = ({ onGet, onPost, onDelete, country, onCancel }) => {
 
@@ -51,6 +51,8 @@ const SolarWatch = ({ onGet, onPost, onDelete, country, onCancel }) => {
             onChange={(e) => setGetCountryName(e.target.value)}
             name="name"
             id="name"
+            placeholder="City"
+            autocomplete="off"
           />
         </InputWrapper>
 
@@ -73,6 +75,8 @@ const SolarWatch = ({ onGet, onPost, onDelete, country, onCancel }) => {
             onChange={(e) => setPostCountryName(e.target.value)}
             name="name"
             id="name"
+            placeholder="City"
+            autocomplete="off"
           />
         </InputWrapper>
 
@@ -94,6 +98,8 @@ const SolarWatch = ({ onGet, onPost, onDelete, country, onCancel }) => {
             onChange={(e) => setDeleteCountryName(e.target.value)}
             name="name"
             id="name"
+            placeholder="Id"
+            autocomplete="off"
           />
         </InputWrapper>
 

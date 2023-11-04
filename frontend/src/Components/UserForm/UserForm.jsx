@@ -48,6 +48,7 @@ const UserForm = ({ onSave, user, onCancel }) => {
             onChange={(e) => setEmail(e.target.value)}
             name="email"
             id="email"
+            placeholder="E-mail"
           />
         </InputWrapper>
       </FormRow>
@@ -60,6 +61,8 @@ const UserForm = ({ onSave, user, onCancel }) => {
             onChange={(e) => setUsername(e.target.value)}
             name="username"
             id="username"
+            placeholder="Username"
+            autocomplete="off"
           />
         </InputWrapper>
       </FormRow>
@@ -72,6 +75,8 @@ const UserForm = ({ onSave, user, onCancel }) => {
             onChange={(e) => setPassword(e.target.value)}
             name="password"
             id="password"
+            placeholder="Password"
+            autocomplete="off"
           />
         </InputWrapper>
       </FormRow>
@@ -84,6 +89,8 @@ const UserForm = ({ onSave, user, onCancel }) => {
             onChange={(e) => setPassword(e.target.value)}
             name="password"
             id="password"
+            placeholder="Password"
+            autocomplete="off"
           />
         </InputWrapper>
       </FormRow>

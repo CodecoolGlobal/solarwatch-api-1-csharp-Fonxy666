@@ -36,6 +36,7 @@ const Login = ({ onLogin, user, onCancel }) => {
             onChange={(e) => setUsername(e.target.value)}
             name="username"
             id="username"
+            placeholder="Username"
           />
         </InputWrapper>
       </FormRow>
@@ -48,6 +49,8 @@ const Login = ({ onLogin, user, onCancel }) => {
             onChange={(e) => setPassword(e.target.value)}
             name="password"
             id="password"
+            placeholder="Password"
+            autocomplete="off"
           />
         </InputWrapper>
       </FormRow>

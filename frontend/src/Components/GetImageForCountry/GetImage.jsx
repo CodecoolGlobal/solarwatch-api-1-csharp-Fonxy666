@@ -3,8 +3,9 @@ import { useLocation } from 'react-router-dom';
 import Loading from "../Loading/Loading";
 import { Image } from "../Styles/Image.styled";
 import { TextContainer, TextWrapper } from "../Styles/TextContainer.styled";
+import { ButtonContainer, CancelButtonWrapper } from "../Styles/ButtonContainer.styled";
 
-const GetImage = ({ city }) => {
+const GetImage = ({ city, onCancel }) => {
   const location = useLocation();
   const state = location.state;
   const [loading, setLoading] = useState(false);
@@ -27,7 +28,13 @@ const GetImage = ({ city }) => {
           <TextContainer>Sunset time:</TextContainer>
           <TextContainer>{state.data.sunSetTime}</TextContainer>
         </TextWrapper>
+
       )}
+      <CancelButtonWrapper>
+        <ButtonContainer type="button" onClick = { onCancel }>
+          Cancel
+        </ButtonContainer>
+      </CancelButtonWrapper>
     </div>
   );
 };
