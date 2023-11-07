@@ -20,3 +20,14 @@ export const InputForm = styled.input`
   color: #e81cff;
   border-radius: 8px;
 `;
+
+export const SelectForm = styled.select`
+  position: relative;
+  margin-top: 2.5px;
+  margin-left: 4px;
+  width: 200px;
+  height: 37px;
+  background: black !important;
+  color: #e81cff;
+  border-radius: 8px;
+`;

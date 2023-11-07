@@ -50,7 +50,7 @@ const Login = ({ onLogin, user, onCancel }) => {
             name="password"
             id="password"
             placeholder="Password"
-            autocomplete="off"
+            autoComplete="off"
           />
         </InputWrapper>
       </FormRow>
