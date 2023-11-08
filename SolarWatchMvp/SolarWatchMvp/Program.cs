@@ -10,6 +10,10 @@ using SolarWatchMvp.Repository;
 using SolarWatchMvp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var solarApiKey = builder.Configuration["Api:ServiceApiKey"];
+var iA = builder.Configuration["IssueAudience"];
+var iS = builder.Configuration["IssueSign"];
+var connection = builder.Configuration["ConnectionString"];
 
 AddServices();
 AddDbContext();
@@ -70,9 +74,9 @@ void AddServices()
 void AddDbContext()
 {
     builder.Services.AddDbContext<WeatherApiContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        options.UseSqlServer(connection));
     builder.Services.AddDbContext<UsersContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        options.UseSqlServer(connection));
 }
 
 void AddAuthentication()
@@ -80,19 +84,20 @@ void AddAuthentication()
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ClockSkew = TimeSpan.Zero,
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = "apiWithAuthBackend",
-                ValidAudience = "apiWithAuthBackend",
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes("!SomethingSecret!")
-                ),
-            };
+            if (iS != null)
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ClockSkew = TimeSpan.Zero,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = iA,
+                    ValidAudience = iA,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(iS)
+                    ),
+                };
         });
 }
 
@@ -102,12 +107,19 @@ void AddIdentity()
         .AddIdentityCore<IdentityUser>(options =>
         {
             options.SignIn.RequireConfirmedAccount = false;
+            
             options.User.RequireUniqueEmail = true;
+            options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+            
             options.Password.RequireDigit = false;
             options.Password.RequiredLength = 6;
             options.Password.RequireNonAlphanumeric = false;
             options.Password.RequireUppercase = false;
             options.Password.RequireLowercase = false;
+            
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            options.Lockout.MaxFailedAccessAttempts = 5;
+            options.Lockout.AllowedForNewUsers = true;
         })
         .AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<UsersContext>();
@@ -147,7 +159,7 @@ void ConfigureApp()
 
 void AddRoles()
 {
-    using var scope = app.Services.CreateScope(); // RoleManager is a scoped service, therefore we need a scope instance to access it
+    using var scope = app.Services.CreateScope();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
     var tAdmin = CreateAdminRole(roleManager);

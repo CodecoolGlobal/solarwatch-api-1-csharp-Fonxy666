@@ -5,15 +5,17 @@ namespace SolarWatchMvp.Controllers;
 public class OpenWeatherMapApi : IWeatherDataProvider
 {
     private readonly ILogger<OpenWeatherMapApi> _logger;
+    private readonly IConfiguration _configuration;
     
-    public OpenWeatherMapApi(ILogger<OpenWeatherMapApi> logger)
+    public OpenWeatherMapApi(ILogger<OpenWeatherMapApi> logger, IConfiguration configuration)
     {
         _logger = logger;
+        _configuration = configuration;
     }
 
     public async Task<string> GetCoordinates(string cityName)
     {
-        const string apIkey = "dff12a8fd6946ce444e8f792f93eefb4";
+        var apIkey = _configuration["Api:ServiceApiKey"];
         var url = $"https://api.openweathermap.org/geo/1.0/direct?q={cityName}&limit=5&appid={apIkey}";
         /*https://api.openweathermap.org/geo/1.0/direct?q=Budapest&limit=5&appid=dff12a8fd6946ce444e8f792f93eefb4*/
 
