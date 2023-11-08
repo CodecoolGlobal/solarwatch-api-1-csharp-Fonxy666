@@ -14,8 +14,6 @@ const GetImage = ({ city, onCancel }) => {
     return <Loading />;
   }
 
-  console.log(state);
-
   return (
     <div>
       <Image src={city} alt="City" />

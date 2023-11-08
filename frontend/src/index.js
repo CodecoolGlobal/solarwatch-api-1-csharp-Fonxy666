@@ -36,12 +36,12 @@ const App = () => {
           element: <UserCreator />,
         },
         {
-          path: '/login',
+          path: '/account/login',
           element: isAuthenticated ? <Login /> : <div className="welcome-text">You are already logged in!</div>
         },
         {
           path: '/solar-watch',
-          element: isAuthenticated ? <SolarWatch /> : <Navigate to="/login" />,
+          element: isAuthenticated ? <SolarWatch /> : <Navigate to="/account/login" />,
         },
         {
           path: '/city/:cityName',

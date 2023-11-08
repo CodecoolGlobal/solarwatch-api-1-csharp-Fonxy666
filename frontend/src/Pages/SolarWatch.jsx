@@ -13,7 +13,7 @@ const GetCountry = async (city, token) => {
         "Authorization": `Bearer ${token}`,
       },
     });
-    console.log(city);
+
     if (!response.ok) {
       const errorMessage = `HTTP error! Status: ${response.status}`;
       throw new Error(errorMessage);
@@ -43,6 +43,7 @@ const PostCountry = async (city, token) => {
     }
 
     const data = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
     console.error("Error occurred during fetch:", error);

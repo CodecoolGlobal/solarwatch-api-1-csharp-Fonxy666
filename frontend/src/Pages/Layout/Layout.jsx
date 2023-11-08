@@ -26,8 +26,8 @@ const Layout = () => {
       <nav>
         {!jwtToken ? (
           <ButtonRowContainer>
-            {location.pathname !== "/login" && (
-              <Link to="/login" className="link">
+            {location.pathname !== "/account/login" && (
+              <Link to="/account/login" className="link">
                 <ButtonContainer type="button">Login</ButtonContainer>
               </Link>
             )}
