@@ -17,10 +17,12 @@ const SolarWatch = ({ onGet, onPost, onDelete, country, onCancel }) => {
   const [action, setAction] = useState("");
 
   const handleSuggestions = async (value) => {
+    const apiKey = process.env.REACT_APP_API_KEY;
+
     if (value.length >= 3) {
       try {
         const response = await axios.get(
-          `https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=dff12a8fd6946ce444e8f792f93eefb4`
+          `https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=${apiKey}`
         );
         const cities = response.data.map((city) => city.name);
         setSuggestions(cities);

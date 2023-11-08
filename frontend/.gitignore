@@ -27,3 +27,5 @@ yarn-error.log*
 **/Migrations/*.cs
 **/Migrations/*.Designer.cs
 **/Migrations/*.resx
+
+**.env

@@ -20,7 +20,6 @@ const GetCountry = async () => {
     }
 
     const data = await response.json();
-    console.log(data);
     return data.photos[3].src.large;
   } catch (error) {
     console.error("Error occurred during fetch:", error);
