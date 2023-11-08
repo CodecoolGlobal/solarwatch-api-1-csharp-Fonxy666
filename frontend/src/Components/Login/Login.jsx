@@ -51,6 +51,7 @@ const Login = ({ onLogin, user, onCancel }) => {
             id="password"
             placeholder="Password"
             autoComplete="off"
+            type="password"
           />
         </InputWrapper>
       </FormRow>

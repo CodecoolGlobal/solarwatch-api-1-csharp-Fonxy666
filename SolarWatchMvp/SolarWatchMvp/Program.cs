@@ -11,7 +11,6 @@ using SolarWatchMvp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-AddCors();
 AddServices();
 AddDbContext();
 AddAuthentication();
@@ -29,7 +28,22 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.UseCors("MyPolicy");
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("Access-Control-Allow-Origin", "http://localhost:3000");
+    context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+    if (context.Request.Method == "OPTIONS")
+    {
+        context.Response.StatusCode = 200;
+    }
+    else
+    {
+        await next();
+    }
+});
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -38,20 +52,6 @@ app.MapControllers();
 AddAdmin();
 
 app.Run();
-
-void AddCors()
-{
-    builder.Services.AddCors(options =>
-    {
-        options.AddPolicy("MyPolicy",
-            builder =>
-            {
-                builder.WithOrigins("http://localhost:3000")
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
-            });
-    });
-}
 
 void AddServices()
 {

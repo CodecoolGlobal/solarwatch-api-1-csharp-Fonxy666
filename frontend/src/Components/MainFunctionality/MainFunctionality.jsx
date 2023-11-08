@@ -16,11 +16,7 @@ const SolarWatch = ({ onGet, onPost, onDelete, country, onCancel }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [action, setAction] = useState("");
 
-  const handleGetSubmit = async (e) => {
-    console.log(e.target.value);
-    const value = e.target.value;
-    setGetCountryName(value);
-
+  const handleSuggestions = async (value) => {
     if (value.length >= 3) {
       try {
         const response = await axios.get(
@@ -35,6 +31,11 @@ const SolarWatch = ({ onGet, onPost, onDelete, country, onCancel }) => {
       setSuggestions([]);
     }
   }
+
+  const handleGetSubmit = (e) => {
+    e.preventDefault();
+    onGet(getCountryName);
+  };
 
   const handlePostSubmit = (e) => {
     e.preventDefault();
@@ -56,7 +57,6 @@ const SolarWatch = ({ onGet, onPost, onDelete, country, onCancel }) => {
       handleDeleteSubmit(e);
     }
   };
-console.log(suggestions);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -66,7 +66,9 @@ console.log(suggestions);
         <InputWrapper>
           <InputForm
             value={getCountryName}
-            onChange={handleGetSubmit}
+            onChange={(e) => {setGetCountryName(e.target.value);
+                             handleSuggestions(getCountryName);
+                            }}
             name="name"
             id="name"
             placeholder="City"
@@ -74,7 +76,7 @@ console.log(suggestions);
           />
           {suggestions.length > 0 && (
             <SelectForm
-              onChange={(e) => setGetCountryName(e.target.value)}
+              onChange={(e) => handleSuggestions(getCountryName)}
               size={suggestions.length > 5 ? 5 : suggestions.length}
             >
               {suggestions.map((city, index) => (

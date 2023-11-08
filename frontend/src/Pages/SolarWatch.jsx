@@ -13,7 +13,7 @@ const GetCountry = async (city, token) => {
         "Authorization": `Bearer ${token}`,
       },
     });
-
+    console.log(city);
     if (!response.ok) {
       const errorMessage = `HTTP error! Status: ${response.status}`;
       throw new Error(errorMessage);
