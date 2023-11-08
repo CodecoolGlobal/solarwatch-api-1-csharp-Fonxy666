@@ -20,7 +20,7 @@ COPY appsettings.json ./
 # Set environment variables from user secrets
 ENV IssueAudience=apiWithAuthBackend
 ENV ConnectionString="Server=host.docker.internal,1433;Database=solarwatch;User Id=sa;Password=yourStrong(!)Password;MultipleActiveResultSets=true;TrustServerCertificate=True;"
-ENV ServiceApiKey=1593b000aeea6d27a1247cb005f6103b
+ENV ServiceApiKey="1593b000aeea6d27a1247cb005f6103b"
 ENV IssueSign=!SomethingSecret!
 
 # Copy published output

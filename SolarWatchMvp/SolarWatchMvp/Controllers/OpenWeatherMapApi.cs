@@ -15,9 +15,9 @@ public class OpenWeatherMapApi : IWeatherDataProvider
 
     public async Task<string> GetCoordinates(string cityName)
     {
-        var apIkey = _configuration["Api:ServiceApiKey"];
-        var url = $"https://api.openweathermap.org/geo/1.0/direct?q={cityName}&limit=5&appid={apIkey}";
-        /*https://api.openweathermap.org/geo/1.0/direct?q=Budapest&limit=5&appid=dff12a8fd6946ce444e8f792f93eefb4*/
+        var apiKey = _configuration["ServiceApiKey"];
+        Console.WriteLine(apiKey);
+        var url = $"https://api.openweathermap.org/geo/1.0/direct?q={cityName}&limit=5&appid={apiKey}";
 
         var client = new HttpClient();
 

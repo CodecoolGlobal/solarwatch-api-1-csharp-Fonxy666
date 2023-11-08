@@ -68,8 +68,8 @@ public class CrudAdminController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            _logger.LogError(e, $"Error put sun data with id: {id}");
+            return NotFound($"Error put sun data with id: {id}");
         }
     }
 
@@ -95,12 +95,12 @@ public class CrudAdminController : ControllerBase
             _repository.SunTimes!.Remove(existingSunTime);
             await _repository.SaveChangesAsync();
 
-            return Ok("Successful!");
+            return Ok($"Successful delete on {id}!");
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            _logger.LogError(e, "Error delete sun data");
+            return NotFound("Error delete sun data");
         }
     }
 
@@ -138,8 +138,8 @@ public class CrudAdminController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error getting sun data");
-            return NotFound("Error getting sun data");
+            _logger.LogError(e, "Error posting sun data");
+            return NotFound("Error posting sun data");
         }
     }
 }
