@@ -62,7 +62,7 @@ const UserForm = ({ onSave, user, onCancel }) => {
             name="username"
             id="username"
             placeholder="Username"
-            autocomplete="off"
+            autoComplete="off"
           />
         </InputWrapper>
       </FormRow>
@@ -74,9 +74,9 @@ const UserForm = ({ onSave, user, onCancel }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             name="password"
-            id="password"
+            id="password1"
             placeholder="Password"
-            autocomplete="off"
+            autoComplete="off"
             type="password"
           />
         </InputWrapper>
@@ -89,9 +89,9 @@ const UserForm = ({ onSave, user, onCancel }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             name="password"
-            id="password"
+            id="password2"
             placeholder="Password"
-            autocomplete="off"
+            autoComplete="off"
             type="password"
           />
         </InputWrapper>
