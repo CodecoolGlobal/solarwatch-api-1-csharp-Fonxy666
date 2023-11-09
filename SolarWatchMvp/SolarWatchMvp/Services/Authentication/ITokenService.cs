@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace SolarWatchMvp.Services;
+namespace SolarWatchMvp.Services.Authentication;
 
 public interface ITokenService
 {

@@ -1,5 +1,4 @@
-﻿# Dockerfile
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
+﻿FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
@@ -17,11 +16,11 @@ WORKDIR /app
 # Copy user secrets to the container
 COPY appsettings.json ./
 
-# Set environment variables from user secrets
-ENV IssueAudience=apiWithAuthBackend
-ENV ConnectionString="Server=host.docker.internal,1433;Database=solarwatch;User Id=sa;Password=yourStrong(!)Password;MultipleActiveResultSets=true;TrustServerCertificate=True;"
-ENV ServiceApiKey="1593b000aeea6d27a1247cb005f6103b"
-ENV IssueSign=!SomethingSecret!
+# Set environment variables with placeholders
+ENV IssueAudience=${ISSUE_AUDIANCE}
+ENV ConnectionString=${CONNECTION_STRING}
+ENV ServiceApiKey=${SERVICE_API_KEY}
+ENV IssueSign=${SOMETHING_SECRET}
 
 # Copy published output
 COPY --from=build-env /app/out .

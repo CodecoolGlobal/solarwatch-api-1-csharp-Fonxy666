@@ -8,7 +8,6 @@ public class JsonProcessor : IJsonProcessor
     public City CityProcess(string data)
     {
         var json = JsonDocument.Parse(data).RootElement[0];
-        Console.WriteLine(json);
         
         if (json.TryGetProperty("state", out var stateElement))
         {

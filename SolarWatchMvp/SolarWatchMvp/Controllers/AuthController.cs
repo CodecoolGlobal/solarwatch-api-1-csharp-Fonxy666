@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SolarWatchMvp.Contracts;
 using SolarWatchMvp.Services;
+using SolarWatchMvp.Services.Authentication;
 
 namespace SolarWatchMvp.Controllers;
 

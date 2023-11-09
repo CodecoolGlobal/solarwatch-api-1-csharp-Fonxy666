@@ -3,7 +3,6 @@
 services:
   web:
     image: solarwatch
-    # Add your web service configurations here
 
   db:
     image: mysql:latest
@@ -14,7 +13,6 @@ services:
       MYSQL_PASSWORD: sample_password
     volumes:
       - db-data:/var/lib/mysql
-    # Add other configurations for the database service here
 
 volumes:
   db-data:

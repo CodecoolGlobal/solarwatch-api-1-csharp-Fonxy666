@@ -3,6 +3,7 @@ using Moq;
 using SolarWatchMvp.Contracts;
 using SolarWatchMvp.Controllers;
 using SolarWatchMvp.Services;
+using SolarWatchMvp.Services.Authentication;
 
 namespace SunriseSunsetTest.RegisterControllerTests;
 
