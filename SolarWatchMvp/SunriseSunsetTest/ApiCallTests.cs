@@ -10,17 +10,22 @@ public class WeatherDataProviderTests
 {
     private ILogger<OpenWeatherMapApi> _logger;
     private IWeatherDataProvider _weatherDataProvider;
+    private IConfiguration _configuration;
 
     [SetUp]
     public void Setup()
     {
         _logger = new Mock<ILogger<OpenWeatherMapApi>>().Object;
-        _weatherDataProvider = new OpenWeatherMapApi(_logger);
+        var builder = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+        _configuration = builder.Build();
+        _weatherDataProvider = new OpenWeatherMapApi(_logger, _configuration);
     }
 
     [Test]
     public async Task GetCoordinates_ValidCityName_ReturnsNonEmptyString()
     {
+        Console.WriteLine($"hahahhahahahha{_configuration["Api:ServiceApiKey"]}");
         const string cityName = "Budapest";
         
         var result = await _weatherDataProvider.GetCoordinates(cityName);
