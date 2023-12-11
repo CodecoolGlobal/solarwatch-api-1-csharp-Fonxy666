@@ -11,22 +11,24 @@ public class TokenService : ITokenService
 {
     private const int ExpirationMinutes = 30;
         
-    public string CreateToken(IdentityUser user, string? role)
+    public string CreateToken(IdentityUser user, string? role, bool isTest = false)
     {
         var expiration = DateTime.UtcNow.AddMinutes(ExpirationMinutes);
-        var token = CreateJwtToken(CreateClaims(user, role), CreateSigningCredentials(), expiration);
+         var token = CreateJwtToken(CreateClaims(user, role), CreateSigningCredentials(), expiration);
         var tokenHandler = new JwtSecurityTokenHandler();
         return tokenHandler.WriteToken(token);
     }
 
-    private JwtSecurityToken CreateJwtToken(List<Claim> claims, SigningCredentials credentials, DateTime expiration) => 
-        new(
+    private JwtSecurityToken CreateJwtToken(List<Claim> claims, SigningCredentials credentials, DateTime expiration)
+    {
+        return new JwtSecurityToken(
             "apiWithAuthBackend",
             "apiWithAuthBackend",
             claims,
             expires: expiration,
             signingCredentials: credentials
         );
+    }
 
     private List<Claim> CreateClaims(IdentityUser user, string? role)
     {
@@ -37,10 +39,19 @@ public class TokenService : ITokenService
                 new(JwtRegisteredClaimNames.Sub, "TokenForTheApiWithAuth"),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)),
-                new(ClaimTypes.NameIdentifier, user.Id),
-                new(ClaimTypes.Name, user.UserName!),
-                new(ClaimTypes.Email, user.Email!)
+                new(ClaimTypes.NameIdentifier, user.Id)
             };
+
+            if (!string.IsNullOrEmpty(user.UserName))
+            {
+                claims.Add(new(ClaimTypes.Name, user.UserName));
+            }
+
+            if (!string.IsNullOrEmpty(user.Email))
+            {
+                claims.Add(new(ClaimTypes.Email, user.Email));
+            }
+
             if (role != null)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));

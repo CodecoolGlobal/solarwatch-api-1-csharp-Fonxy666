@@ -6,8 +6,6 @@ import { FormRow, Form } from "../Styles/Form.styled";
 import { InputForm, InputWrapper, SelectForm } from "../Styles/Input.styled";
 import axios from 'axios';
 
-const suggestions = ["Kecel", "Kecskemet"]; // Your autocomplete options
-
 const SolarWatch = ({ onGet, onPost, onDelete, country, onCancel }) => {
 
   const [getCountryName, setGetCountryName] = useState(country?.name ?? "");

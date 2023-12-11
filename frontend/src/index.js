@@ -8,7 +8,7 @@ import Layout from "./Pages/Layout";
 import UserCreator from "./Pages/UserCreator";
 import Login from "./Pages/Login";
 import SolarWatch from "./Pages/SolarWatch";
-import ShowCountry from "./Pages/ShowCountry";
+import PasswordChange from "./Pages/PasswordChange";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -40,12 +40,20 @@ const App = () => {
           element: isAuthenticated ? <Login /> : <div className="welcome-text">You are already logged in!</div>
         },
         {
+          path: '/account/change-password',
+          element: isAuthenticated ? <Login /> : <div className="welcome-text">Log in first to change password! :)</div>
+        },
+        {
           path: '/solar-watch',
           element: isAuthenticated ? <SolarWatch /> : <Navigate to="/account/login" />,
         },
         {
           path: '/city/:cityName',
-          element: <ShowCountry/>
+          element: <PasswordChange />
+        },
+        {
+          path: '/user/password-change',
+          element: <PasswordChange />
         }
       ],
     },

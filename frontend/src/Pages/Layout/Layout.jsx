@@ -41,6 +41,9 @@ const Layout = () => {
             <Link to="/solar-watch" className="link">
               <ButtonContainer type="button">Solar-watch</ButtonContainer>
             </Link>
+            <Link to="/user/password-change" className="link">
+              <ButtonContainer type="button">Password change</ButtonContainer>
+            </Link>
           </ButtonRowContainer>
           )}
       </nav>
