@@ -8,17 +8,12 @@ namespace SolarWatchMvp.Controllers;
 
 [ApiController]
 [Route("Sunset-Sunrise")]
-public class WeatherForecastController : ControllerBase
+public class WeatherForecastController(ILogger<WeatherForecastController> logger, WeatherApiContext weatherApiContext)
+    : ControllerBase
 {
-    private readonly ILogger<WeatherForecastController> _logger;
-    private readonly WeatherApiContext _repository;
+    private readonly ILogger<WeatherForecastController> _logger = logger;
+    private readonly WeatherApiContext _repository = weatherApiContext;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, WeatherApiContext weatherApiContext)
-    {
-        _logger = logger;
-        _repository = weatherApiContext;
-    }
-    
     [HttpGet("Get"), Authorize]
     public async Task<ActionResult<SunTime>> GetSunTime(string name)
     {
@@ -29,6 +24,10 @@ public class WeatherForecastController : ControllerBase
             {
                 _logger.LogInformation($"Data for {name} not exists in the database.");
                 return Ok(existingCity);
+            }
+            await foreach (var repositoryCity in _repository.Cities)
+            {
+                
             }
             
             var existingSunTime = await _repository.SunTimes!.FirstOrDefaultAsync(sunTime => sunTime.CityId == existingCity.Id);

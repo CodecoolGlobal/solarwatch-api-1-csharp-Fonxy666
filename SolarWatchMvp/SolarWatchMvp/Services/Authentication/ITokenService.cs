@@ -4,5 +4,5 @@ namespace SolarWatchMvp.Services.Authentication;
 
 public interface ITokenService
 {
-    string CreateToken(IdentityUser user, string? role);
+    public string CreateToken(IdentityUser user, string? role, bool isTest = false);
 }

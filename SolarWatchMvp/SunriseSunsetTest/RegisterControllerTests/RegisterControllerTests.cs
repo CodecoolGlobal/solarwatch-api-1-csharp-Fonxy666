@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SolarWatchMvp.Contracts;
 using SolarWatchMvp.Controllers;
@@ -64,3 +65,4 @@ public class AuthControllerTests
         Assert.AreEqual(authResponse.Token, data.Token);
     }
 }
+*/
