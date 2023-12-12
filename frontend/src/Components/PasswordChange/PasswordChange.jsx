@@ -100,7 +100,7 @@ const PasswordChange = ({ onSave, user, onCancel }) => {
 
       <ButtonRowContainer>
         <ButtonContainer type="submit">
-          {user ? "Update User" : "Create User"}
+          Create User
         </ButtonContainer>
         <ButtonContainer type="button" onClick = { onCancel }>
           Cancel

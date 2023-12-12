@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import GetImage from '../Components/GetImageForCountry';
 import { useNavigate } from 'react-router-dom';
+import Cookies from "js-cookie";
 
-const GetCountry = async () => {
+const GetCountry = async (token) => {
   try {
     const url = new URL(window.location.href);
     const cityName = url.pathname.split('/').pop();
@@ -10,7 +11,7 @@ const GetCountry = async () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "5a3C9MsrDui8kFqlNHf1Gt0eQCWGPbRP7LKPW9OQhzwd4k0RnOz5DBa6"
+        "Authorization": `Bearer ${token}`
       },
     });
 
@@ -31,9 +32,14 @@ const ShowCountry = () => {
   const [imageUrl, setImageUrl] = useState(null);
   const navigate = useNavigate();
 
+  const getToken = () => {
+    return Cookies.get("jwtToken");
+  }
+
   const handleGet = async () => {
+    const token = getToken();
     try {
-      const data = await GetCountry();
+      const data = await GetCountry(token);
       setImageUrl(data);
     } catch (error) {
       alert(`There is no City: in our database!`);

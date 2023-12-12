@@ -5,7 +5,6 @@ import Cookies from "js-cookie";
 import Loading from "../Components/Loading/Loading";
 
 const postLogin = (user) => {
-  console.log(user);
     return fetch("http://localhost:8080/Auth/Login", {
       method: "POST",
       headers: {

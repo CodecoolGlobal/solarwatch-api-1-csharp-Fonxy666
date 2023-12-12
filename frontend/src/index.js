@@ -9,6 +9,7 @@ import UserCreator from "./Pages/UserCreator";
 import Login from "./Pages/Login";
 import SolarWatch from "./Pages/SolarWatch";
 import PasswordChange from "./Pages/PasswordChange";
+import ShowCountry from "./Pages/ShowCountry";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -49,7 +50,7 @@ const App = () => {
         },
         {
           path: '/city/:cityName',
-          element: <PasswordChange />
+          element: <ShowCountry />
         },
         {
           path: '/user/password-change',
