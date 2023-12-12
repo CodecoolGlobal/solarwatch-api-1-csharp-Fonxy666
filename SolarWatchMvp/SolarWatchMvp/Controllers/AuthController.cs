@@ -71,16 +71,17 @@ public class AuthController : ControllerBase
         return Ok(new AuthResponse(result.Email, result.UserName, result.Token));
     }
 
-    [HttpPatch("Put"), Authorize(Roles = "User, Admin")]
+    [HttpPatch("Patch"), Authorize(Roles = "User, Admin")]
     public async Task<ActionResult<ChangeUserPasswordResponse>> ChangeUserPassword([FromBody] ChangeUserPasswordRequest request)
     {
+        Console.WriteLine(request);
         try
         {
             var existingUser = await _userManager.FindByEmailAsync(request.Email);
             if (existingUser == null)
             {
                 _logger.LogInformation($"Data for email: {request.Email} doesnt't exists in the database.");
-                return Ok(existingUser);
+                return BadRequest(ModelState);
             }
 
             var result = await _userManager.ChangePasswordAsync(existingUser, request.OldPassword, request.NewPassword);
