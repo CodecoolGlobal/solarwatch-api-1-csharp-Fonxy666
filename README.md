@@ -1,1 +1,1 @@
-No starter code is provided. Start from scratch!
+This was a solo application, where i used C#, React(javascript) as frontend, and PostgreSQL as database, providing users the ability to track and predict sunset times. Leveraging the object-oriented nature of C# for a robust backend, React's declarative UI for a seamless user experience, and PostgreSQL's ACID compliance for data integrity, the application provides an intuitive interface for users to stay informed about sunset timings, enhancing their awareness of daylight transitions.
