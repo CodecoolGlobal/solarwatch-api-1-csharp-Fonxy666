@@ -11,15 +11,8 @@ using SolarWatchMvp.Services.Authentication;
 
 namespace SolarWatchMvp;
 
-public class Startup
+public class Startup(IConfiguration configuration)
 {
-    private readonly IConfiguration _configuration;
-    
-    public Startup(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-    
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
@@ -60,12 +53,9 @@ public class Startup
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ITokenService, TokenService>();
         
-        var connection = _configuration["ConnectionString"];
-        /*var connection = Environment.GetEnvironmentVariable("CONNECTION_STRING");*/
-        var iS = _configuration["IssueSign"];
-        /*var iS = Environment.GetEnvironmentVariable("SOMETHING_SECRET");*/
-        var iA = _configuration["IssueAudience"];
-        /*var iA = Environment.GetEnvironmentVariable("ISSUE_AUDIANCE");*/
+        var connection = configuration["ConnectionString"];
+        var iS = configuration["IssueSign"];
+        var iA = configuration["IssueAudience"];
         
         services.AddDbContext<WeatherApiContext>(options => options.UseSqlServer(connection));
         services.AddDbContext<UsersContext>(options => options.UseSqlServer(connection));
@@ -170,8 +160,8 @@ public class Startup
         var adminInDb = await userManager.FindByEmailAsync("adminGod@windowslive.com");
         if (adminInDb == null)
         {
-            var admin = new IdentityUser { UserName = "Admin", Email = "adminGod@windowslive.com" };
-            var adminCreated = await userManager.CreateAsync(admin, "asdASDasd123666");
+            var admin = new IdentityUser { UserName = configuration["AdminUserName"], Email = configuration["AdminEmail"] };
+            var adminCreated = await userManager.CreateAsync(admin, configuration["AdminPassword"]!);
 
             if (adminCreated.Succeeded)
             {

@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace SolarWatchMvp.Services.Authentication;
 
-public class TokenService : ITokenService
+public class TokenService(IConfiguration configuration) : ITokenService
 {
     private const int ExpirationMinutes = 30;
         
@@ -22,8 +22,8 @@ public class TokenService : ITokenService
     private JwtSecurityToken CreateJwtToken(List<Claim> claims, SigningCredentials credentials, DateTime expiration)
     {
         return new JwtSecurityToken(
-            "apiWithAuthBackend",
-            "apiWithAuthBackend",
+            configuration["IssueAudience"],
+            configuration["IssueAudience"],
             claims,
             expires: expiration,
             signingCredentials: credentials
@@ -36,7 +36,7 @@ public class TokenService : ITokenService
         {
             var claims = new List<Claim>
             {
-                new(JwtRegisteredClaimNames.Sub, "TokenForTheApiWithAuth"),
+                new(JwtRegisteredClaimNames.Sub, configuration["IssueAudience"] ?? "defaultAudience"),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)),
                 new(ClaimTypes.NameIdentifier, user.Id)

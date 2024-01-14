@@ -18,15 +18,13 @@ WORKDIR /app
 COPY appsettings.json ./
 
 # Set environment variables from user secrets
-ENV IssueAudience=apiWithAuthBackend
-ENV ConnectionString="Server=host.docker.internal,1433;Database=solarwatch;User Id=sa;Password=yourStrong(!)Password;MultipleActiveResultSets=true;TrustServerCertificate=True;"
-ENV ServiceApiKey="1593b000aeea6d27a1247cb005f6103b"
-ENV IssueSign=!SomethingSecret!
-# Set environment variables with placeholders
-#ENV IssueAudience=${ISSUE_AUDIANCE}
-#ENV ConnectionString=${CONNECTION_STRING}
-#ENV ServiceApiKey=${SERVICE_API_KEY}
-#ENV IssueSign=${SOMETHING_SECRET}
+ENV IssueAudience=$IssueAudience
+ENV ConnectionString=$ConnectionString
+ENV ServiceApiKey=$ServiceApiKey
+ENV IssueSign=$IssueSign
+ENV AdminEmail=$AdminEmail
+ENV AdminUserName=$AdminUserName
+ENV AdminPassword=$AdminPassword
 
 # Copy published output
 COPY --from=build-env /app/out .

@@ -2,28 +2,20 @@
 
 namespace SolarWatchMvp.Services.Authentication;
 
-public class AuthService : IAuthService
+public class AuthService(UserManager<IdentityUser> userManager, ITokenService tokenService)
+    : IAuthService
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly ITokenService _tokenService;
-    
-    public AuthService(UserManager<IdentityUser> userManager, ITokenService tokenService)
-    {
-        _userManager = userManager;
-        _tokenService = tokenService;
-    }
-
     public async Task<AuthResult> RegisterAsync(string email, string username, string password, string role)
     {
         var user = new IdentityUser { UserName = username, Email = email };
-        var result = await _userManager.CreateAsync(user, password);
+        var result = await userManager.CreateAsync(user, password);
 
         if (!result.Succeeded)
         {
             return FailedRegistration(result, email, username);
         }
 
-        await _userManager.AddToRoleAsync(user, role);
+        await userManager.AddToRoleAsync(user, role);
         return new AuthResult(true, email, username, "");
     }
 
@@ -41,22 +33,22 @@ public class AuthService : IAuthService
 
     public async Task<AuthResult> LoginAsync(string username, string password)
     {
-        var managedUser = await _userManager.FindByNameAsync(username);
+        var managedUser = await userManager.FindByNameAsync(username);
 
         if (managedUser == null)
         {
             return InvalidLogin();
         }
 
-        var isPasswordValid = await _userManager.CheckPasswordAsync(managedUser, password);
+        var isPasswordValid = await userManager.CheckPasswordAsync(managedUser, password);
 
         if (!isPasswordValid)
         {
             return InvalidLogin();
         }
 
-        var roles = await _userManager.GetRolesAsync(managedUser);
-        var accessToken = _tokenService.CreateToken(managedUser, roles[0]);
+        var roles = await userManager.GetRolesAsync(managedUser);
+        var accessToken = tokenService.CreateToken(managedUser, roles[0]);
 
         return new AuthResult(true, managedUser.Email!, managedUser.UserName!, accessToken);
     }

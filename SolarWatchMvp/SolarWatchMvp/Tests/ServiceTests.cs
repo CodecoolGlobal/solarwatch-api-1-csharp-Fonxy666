@@ -9,7 +9,6 @@ using Moq;
 using SolarWatchMvp.Data;
 using SolarWatchMvp.Services.Authentication;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace SolarWatchMvp.Tests;
 
@@ -35,26 +34,32 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Startup>
 
 public class AuthenticationControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory>
 {
-    private readonly CustomWebApplicationFactory _factory;
-    private readonly ITestOutputHelper _testOutputHelper;
     private readonly HttpClient _httpClient;
     private readonly Mock<IAuthService> _authServiceMock;
 
-    public AuthenticationControllerIntegrationTests(CustomWebApplicationFactory factory, ITestOutputHelper testOutputHelper)
+    public AuthenticationControllerIntegrationTests(CustomWebApplicationFactory factory)
     {
-        _factory = factory;
-        _testOutputHelper = testOutputHelper;
-        _httpClient = _factory.CreateClient();
-        var tokenService = new TokenService();
+        _httpClient = factory.CreateClient();
+        _authServiceMock = new Mock<IAuthService>();
+        ConfigureAuthService(factory);
+    }
 
-        using var scope = _factory.Services.CreateScope();
+    private void ConfigureAuthService(CustomWebApplicationFactory factory)
+    {
+        using var scope = factory.Services.CreateScope();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
         var testUser = new IdentityUser { UserName = "adminGod", Email = "adminGod@adminGod.com" };
         userManager.CreateAsync(testUser, "asdASDasd123666").GetAwaiter().GetResult();
-        _authServiceMock = new Mock<IAuthService>();
+        
         _authServiceMock.Setup(x => x.LoginAsync(It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(new AuthResult(true, "adminGod@adminGod.com", "adminGod",
-                tokenService.CreateToken(testUser, "Admin", false)));
+                CreateToken(factory, testUser, "Admin")));
+    }
+
+    private string CreateToken(CustomWebApplicationFactory factory, IdentityUser user, string role)
+    {
+        var tokenService = new TokenService(factory.Services.GetRequiredService<IConfiguration>());
+        return tokenService.CreateToken(user, role, false);
     }
 
     [Fact]
@@ -62,60 +67,52 @@ public class AuthenticationControllerIntegrationTests : IClassFixture<CustomWebA
     {
         var request = new AuthRequest("Admin", "asdASDasd123666");
         var content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
-
+        
         var response = await _httpClient.PostAsync("http://localhost:8080/Auth/Login", content);
-
+        
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        var responseContent = await response.Content.ReadAsStringAsync();
-        var authResponse = JsonSerializer.Deserialize<AuthResponse>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
+        var authResponse = await DeserializeResponse<AuthResponse>(response);
         Assert.NotNull(authResponse);
     }
 
     [Fact]
-    public async Task CityGet_Returns_OkResult_With_Valid_Credentials()
+    public async Task CityPost_Returns_OkResult_With_Valid_Credentials()
     {
         var authResult = await _authServiceMock.Object.LoginAsync("adminGod", "asdASDasd123666");
+        ConfigureHttpClientAuthorization(authResult);
 
-        if (authResult.Success)
-        {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authResult.Token);
-
-            var city = "Algyo";
-            var content = new StringContent(JsonSerializer.Serialize(city), Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync($"http://localhost:8080/CrudAdmin/Post?name={city}", content);
-
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
-            var responseContent = await response.Content.ReadAsStringAsync();
-            var authResponse = JsonSerializer.Deserialize<AuthResponse>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-            Assert.NotNull(authResponse);
-        }
-    }
-    
-    [Fact]
-    public async Task CityDelete_Returns_OkResult_With_Valid_Credentials()
-    {
-        var authResult = await _authServiceMock.Object.LoginAsync("adminGod", "asdASDasd123666");
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authResult.Token);
-        var id = 1;
-        var cancellationToken = new CancellationToken();
-
-        var response = await _httpClient.DeleteAsync($"http://localhost:8080/CrudAdmin/Delete?id={id}", cancellationToken);
-
+        var city = "Algyo";
+        var content = new StringContent(JsonSerializer.Serialize(city), Encoding.UTF8, "application/json");
+        
+        var response = await _httpClient.PostAsync($"http://localhost:8080/CrudAdmin/Post?name={city}", content);
+        
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
-        try
-        {
-            var authResponse = JsonSerializer.Deserialize<AuthResponse>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            Assert.NotNull(authResponse);
-        }
-        catch (JsonException ex)
-        {
-            Console.WriteLine($"Error occurred during JSON deserialization: {ex.Message}");
-        }
+        var authResponse = await DeserializeResponse<AuthResponse>(response);
+        Assert.NotNull(authResponse);
+    }
+
+    [Fact]
+    public async Task CityDelete_Returns_NoContent_With_Valid_Credentials()
+    {
+        var authResult = await _authServiceMock.Object.LoginAsync("adminGod", "asdASDasd123666");
+        ConfigureHttpClientAuthorization(authResult);
+
+        var id = 1;
+        
+        var response = await _httpClient.DeleteAsync($"http://localhost:8080/CrudAdmin/Delete?id={id}");
+        
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+    }
+
+    private void ConfigureHttpClientAuthorization(AuthResult authResult)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authResult.Token);
+    }
+
+    private async Task<T> DeserializeResponse<T>(HttpResponseMessage response)
+    {
+        var responseContent = await response.Content.ReadAsStringAsync();
+        return JsonSerializer.Deserialize<T>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 }
 

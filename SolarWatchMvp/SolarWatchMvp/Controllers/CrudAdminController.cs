@@ -8,21 +8,10 @@ namespace SolarWatchMvp.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CrudAdminController : ControllerBase
+public class CrudAdminController(ILogger<WeatherForecastController> logger, IWeatherDataProvider weatherDataProvider,
+        IJsonProcessor jsonProcessor, WeatherApiContext weatherApiContext)
+    : ControllerBase
 {
-    private readonly ILogger<WeatherForecastController> _logger;
-    private readonly IWeatherDataProvider _weatherDataProvider;
-    private readonly IJsonProcessor _jsonProcessor;
-    private readonly WeatherApiContext _repository;
-
-    public CrudAdminController(ILogger<WeatherForecastController> logger, IWeatherDataProvider weatherDataProvider, IJsonProcessor jsonProcessor, WeatherApiContext weatherApiContext)
-    {
-        _logger = logger;
-        _weatherDataProvider = weatherDataProvider;
-        _jsonProcessor = jsonProcessor;
-        _repository = weatherApiContext;
-    }
-
     [HttpPut("Put"), Authorize(Roles = "Admin")]
     public async Task<ActionResult<SunTime>> Put(
         int id,
@@ -37,10 +26,10 @@ public class CrudAdminController : ControllerBase
     {
         try
         {
-            var existingCity = await _repository.Cities!.FirstOrDefaultAsync(city => city.Id == id);
+            var existingCity = await weatherApiContext.Cities!.FirstOrDefaultAsync(city => city.Id == id);
             if (existingCity == null)
             {
-                _logger.LogInformation($"Data for id: {id} doesn't exists in the database.");
+                logger.LogInformation($"Data for id: {id} doesn't exists in the database.");
                 return Ok(existingCity);
             }
             else
@@ -52,7 +41,7 @@ public class CrudAdminController : ControllerBase
                     incomingCityCountry);
             }
             
-            var existingSunTime = await _repository.SunTimes!.FirstOrDefaultAsync(sunTime => sunTime.CityId == existingCity.Id);
+            var existingSunTime = await weatherApiContext.SunTimes!.FirstOrDefaultAsync(sunTime => sunTime.CityId == existingCity.Id);
             if (existingSunTime == null)
             {
                 return Ok(existingSunTime);
@@ -62,13 +51,13 @@ public class CrudAdminController : ControllerBase
                 existingSunTime.ChangeSunTimeData(incomingSunRiseTime, incomingSunSetTime);
             }
             
-            await _repository.SaveChangesAsync();
+            await weatherApiContext.SaveChangesAsync();
             
             return Ok($"City with id: {id} successfully updated!");
         }
         catch (Exception e)
         {
-            _logger.LogError(e, $"Error put sun data with id: {id}");
+            logger.LogError(e, $"Error put sun data with id: {id}");
             return NotFound($"Error put sun data with id: {id}");
         }
     }
@@ -78,28 +67,28 @@ public class CrudAdminController : ControllerBase
     {
         try
         {
-            var existingCity = await _repository.Cities!.FirstOrDefaultAsync(city => city.Id == id);
+            var existingCity = await weatherApiContext.Cities!.FirstOrDefaultAsync(city => city.Id == id);
             if (existingCity == null)
             {
-                _logger.LogInformation($"Data for id: {id} doesnt't exists in the database.");
+                logger.LogInformation($"Data for id: {id} doesnt't exists in the database.");
                 return Ok(existingCity);
             }
             
-            var existingSunTime = await _repository.SunTimes!.FirstOrDefaultAsync(sunTime => sunTime.CityId == existingCity.Id);
+            var existingSunTime = await weatherApiContext.SunTimes!.FirstOrDefaultAsync(sunTime => sunTime.CityId == existingCity.Id);
             if (existingSunTime == null)
             {
                 return Ok(existingCity);
             }
 
-            _repository.Cities!.Remove(existingCity);
-            _repository.SunTimes!.Remove(existingSunTime);
-            await _repository.SaveChangesAsync();
+            weatherApiContext.Cities!.Remove(existingCity);
+            weatherApiContext.SunTimes!.Remove(existingSunTime);
+            await weatherApiContext.SaveChangesAsync();
 
             return Ok($"Successful delete on {id}!");
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error delete sun data");
+            logger.LogError(e, "Error delete sun data");
             return NotFound("Error delete sun data");
         }
     }
@@ -109,36 +98,36 @@ public class CrudAdminController : ControllerBase
     {
         try
         {
-            var existingCity = await _repository.Cities.FirstOrDefaultAsync(c => c.Name == name);
+            var existingCity = await weatherApiContext.Cities.FirstOrDefaultAsync(c => c.Name == name);
             if (existingCity != null)
             {
-                _logger.LogInformation($"Data for {name} already exists in the database.");
+                logger.LogInformation($"Data for {name} already exists in the database.");
                 return Ok(existingCity);
             }
 
-            var weatherData = await _weatherDataProvider.GetCoordinates(name);
-            var city = _jsonProcessor.CityProcess(weatherData);
+            var weatherData = await weatherDataProvider.GetCoordinates(name);
+            var city = jsonProcessor.CityProcess(weatherData);
 
-            var sunsetSunrise = await _weatherDataProvider.GetSunTime(city.Latitude, city.Longitude);
-            var time = _jsonProcessor.SunTimeProcess(sunsetSunrise);
+            var sunsetSunrise = await weatherDataProvider.GetSunTime(city.Latitude, city.Longitude);
+            var time = jsonProcessor.SunTimeProcess(sunsetSunrise);
 
             var newCity = new City(city.Name, city.Longitude, city.Latitude, city.State, city.Country);
             
-            _repository.Cities.Add(newCity);
-            await _repository.SaveChangesAsync();
+            weatherApiContext.Cities.Add(newCity);
+            await weatherApiContext.SaveChangesAsync();
             
             var cityId = newCity.Id;
 
             var newSunTime = new SunTime(time.SunRiseTime, time.SunSetTime) { CityId = cityId };
             
-            _repository.SunTimes!.Add(newSunTime);
-            await _repository.SaveChangesAsync();
+            weatherApiContext.SunTimes!.Add(newSunTime);
+            await weatherApiContext.SaveChangesAsync();
 
             return Ok(time);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error posting sun data");
+            logger.LogError(e, "Error posting sun data");
             return NotFound("Error posting sun data");
         }
     }
