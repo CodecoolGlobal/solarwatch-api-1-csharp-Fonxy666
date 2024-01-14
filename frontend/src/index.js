@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import Cookies from "js-cookie";
-
 import Layout from "./Pages/Layout";
 import UserCreator from "./Pages/UserCreator";
 import Login from "./Pages/Login";
@@ -12,60 +11,58 @@ import PasswordChange from "./Pages/PasswordChange";
 import ShowCountry from "./Pages/ShowCountry";
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    
+    const checkIfUserIsAuthenticated = () => {
+        return Cookies.get("jwtToken");
+    };
   
-  const checkIfUserIsAuthenticated = () => {
-    return Cookies.get("jwtToken");
-  };
-  
-  useEffect(() => {
-    const jwtToken = checkIfUserIsAuthenticated();
-    setIsAuthenticated(!isAuthenticated);
-  }, []);
+    useEffect(() => {
+        const jwtToken = checkIfUserIsAuthenticated();
+        setIsAuthenticated(!isAuthenticated);
+    }, []);
 
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      element: <Layout />,
-      children: [
+    const router = createBrowserRouter([
         {
-          path: '/',
-          element: <div className="welcome-text">Welcome to the page!</div>,
-        },
-        {
-          path: '/reg',
-          element: <UserCreator />,
-        },
-        {
-          path: '/account/login',
-          element: isAuthenticated ? <Login /> : <div className="welcome-text">You are already logged in!</div>
-        },
-        {
-          path: '/account/change-password',
-          element: isAuthenticated ? <Login /> : <div className="welcome-text">Log in first to change password! :)</div>
-        },
-        {
-          path: '/solar-watch',
-          element: isAuthenticated ? <SolarWatch /> : <Navigate to="/account/login" />,
-        },
-        {
-          path: '/city/:cityName',
-          element: <ShowCountry />
-        },
-        {
-          path: '/user/password-change',
-          element: <PasswordChange />
-        }
-      ],
-    },
-  ]);
+        path: '/',
+        element: <Layout />,
+        children: [
+            {
+                path: '/',
+                element: <div className="welcome-text">Welcome to the page!</div>,
+            },
+            {
+                path: '/reg',
+                element: <UserCreator />,
+            },
+            {
+                path: '/account/login',
+                element: isAuthenticated ? <Login /> : <div className="welcome-text">You are already logged in!</div>
+            },
+            {
+                path: '/account/change-password',
+                element: isAuthenticated ? <Login /> : <div className="welcome-text">Log in first to change password!</div>
+            },
+            {
+                path: '/solar-watch',
+                element: isAuthenticated ? <SolarWatch /> : <Navigate to="/account/login" />,
+            },
+            {
+                path: '/city/:cityName',
+                element: <ShowCountry />
+            },
+            {
+                path: '/user/password-change',
+                element: <PasswordChange />
+            }
+        ]},
+    ]);
 
-  return (
-    <React.StrictMode>
-      <RouterProvider router={router}>
-      </RouterProvider>
-    </React.StrictMode>
-  );
+    return (
+        <React.StrictMode>
+            <RouterProvider router={router}/>
+        </React.StrictMode>
+    );
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
